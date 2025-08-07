@@ -1,0 +1,122 @@
+import 'package:flutter/material.dart';
+
+import 'package:get/get.dart';
+import 'package:motor_sport_easy/app/modules/event_dashboard/widgets/event_dashboard_card.dart';
+
+import '../controllers/event_dashboard_controller.dart';
+import '../widgets/event_create_button.dart';
+
+class EventDashboardView extends GetView<EventDashboardController> {
+  const EventDashboardView({super.key});
+  @override
+  Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final double screenWidth = mediaQuery.size.width;
+
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: screenWidth>700?screenWidth*0.789:double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: screenWidth < 500
+                      ? Wrap(
+                          children: [
+                            Text(
+                              'All events',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 40,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: EventCreateButton(
+                                onTap: () {},
+                                level: "Create a Event",
+                              ),
+                            ),
+                          ],
+                        )
+                      : Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'All events',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 40,
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 200,
+                              child: EventCreateButton(
+                                onTap: () {},
+                                level: "Create a Event",
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
+              SizedBox(height: 10),
+              SizedBox(
+                width: screenWidth>700?screenWidth*0.789:double.infinity,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth > 700 ? 12 : 2,
+                  ),
+                  child: EventDashboardCard(
+                    eventName: "Event Name",
+                    location: "Location",
+                    time: 'Time',
+                    date: 'Date',
+                    sponsor: "Sponsor",
+                    onTap: () {},
+                    index: 1,
+                    isHeader: true,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: screenWidth>700?700:300,
+                width: screenWidth>700?screenWidth*0.789:double.infinity,
+                child: ListView.builder(
+                  itemCount: 10,
+                  shrinkWrap: true,
+                  physics: ScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: screenWidth > 700 ? 12 : 2,
+                      ),
+                      child: EventDashboardCard(
+                        eventName: "Dakar",
+                        location: "India",
+                        time: '11:49 pm',
+                        date: '1/28/17',
+                        sponsor: "BMG",
+                        onTap: () {},
+                        index: index,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
