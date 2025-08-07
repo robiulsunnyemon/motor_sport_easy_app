@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor_sport_easy/app/modules/event_dashboard/widgets/event_dashboard_card.dart';
 
+import '../../../routes/app_pages.dart';
 import '../controllers/event_dashboard_controller.dart';
 import '../widgets/event_create_button.dart';
 
@@ -40,7 +41,9 @@ class EventDashboardView extends GetView<EventDashboardController> {
                             SizedBox(
                               width: 200,
                               child: EventCreateButton(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
+                                },
                                 level: "Create a Event",
                               ),
                             ),
@@ -70,47 +73,111 @@ class EventDashboardView extends GetView<EventDashboardController> {
                 ),
               ),
               SizedBox(height: 10),
-              SizedBox(
-                width: screenWidth>700?screenWidth*0.789:double.infinity,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth > 700 ? 12 : 2,
-                  ),
-                  child: EventDashboardCard(
-                    eventName: "Event Name",
-                    location: "Location",
-                    time: 'Time',
-                    date: 'Date',
-                    sponsor: "Sponsor",
-                    onTap: () {},
-                    index: 1,
-                    isHeader: true,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: screenWidth>700?700:300,
-                width: screenWidth>700?screenWidth*0.789:double.infinity,
-                child: ListView.builder(
-                  itemCount: 10,
-                  shrinkWrap: true,
-                  physics: ScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    return Padding(
+              screenWidth>600?Column(
+                children: [
+                  SizedBox(
+                    width: screenWidth>700?screenWidth*0.789:double.infinity,
+                    child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: screenWidth > 700 ? 12 : 2,
                       ),
                       child: EventDashboardCard(
-                        eventName: "Dakar",
-                        location: "India",
-                        time: '11:49 pm',
-                        date: '1/28/17',
-                        sponsor: "BMG",
+                        eventName: "Event Name",
+                        location: "Location",
+                        time: 'Time',
+                        date: 'Date',
+                        sponsor: "Sponsor",
                         onTap: () {},
-                        index: index,
+                        index: 1,
+                        isHeader: true,
                       ),
-                    );
-                  },
+                    ),
+                  ),
+                  SizedBox(
+                    height: screenWidth>700?700:300,
+                    width: screenWidth>700?screenWidth*0.789:double.infinity,
+                    child: ListView.builder(
+                      itemCount: 10,
+                      shrinkWrap: true,
+                      physics: ScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth > 700 ? 12 : 2,
+                          ),
+                          child: EventDashboardCard(
+                            eventName: "Dakar",
+                            location: "India",
+                            time: '11:49 pm',
+                            date: '1/28/17',
+                            sponsor: "BMG",
+                            onTap: () {},
+                            index: index,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ):Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withValues(alpha: 0.3),
+                      spreadRadius: 3,
+                      blurRadius: 4,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ]
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: screenWidth>700?screenWidth*0.789:double.infinity,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth > 700 ? 12 : 2,
+                        ),
+                        child: EventDashboardCard(
+                          eventName: "Event",
+                          location: "Location",
+                          time: 'Time',
+                          date: 'Date',
+                          sponsor: "Sponsor",
+                          onTap: () {},
+                          index: 1,
+                          isHeader: true,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: screenWidth>700?700:300,
+                      width: screenWidth>700?screenWidth*0.789:double.infinity,
+                      child: ListView.builder(
+                        itemCount: 10,
+                        shrinkWrap: true,
+                        physics: ScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth > 700 ? 12 : 2,
+                            ),
+                            child: EventDashboardCard(
+                              eventName: "Dakar",
+                              location: "India",
+                              time: '11:49 pm',
+                              date: '1/28/17',
+                              sponsor: "BMG",
+                              onTap: () {
+                                Get.toNamed(Routes.EDIT_EVENT_DASHBOARD);
+                              },
+                              index: index,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

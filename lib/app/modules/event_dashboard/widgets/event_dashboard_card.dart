@@ -32,7 +32,7 @@ class EventDashboardCard extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          height: 80,
+          height: screenWidth>600?80:60,
           padding: EdgeInsets.symmetric(horizontal: screenWidth>700 ?12:4),
           decoration: BoxDecoration(
             color: isHeader
@@ -119,7 +119,11 @@ class EventDashboardCard extends StatelessWidget {
                     ),
 
                     isHeader?SizedBox():screenWidth>700?SizedBox(width: screenWidth*0.0083,):SizedBox(width: 8,),
-                    isHeader?SizedBox():screenWidth>700?SvgPicture.asset("svg/verticaldot.svg",):SvgPicture.asset("assets/svg/verticaldot.svg",)
+                    isHeader?SizedBox():screenWidth>700?GestureDetector(
+                      onTap: onTap,
+                        child: SvgPicture.asset("svg/verticaldot.svg",)):GestureDetector(
+                        onTap: onTap,
+                        child: SvgPicture.asset("assets/svg/verticaldot.svg",))
                   ],
                 ),
               ),

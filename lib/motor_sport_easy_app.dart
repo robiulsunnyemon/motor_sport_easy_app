@@ -40,7 +40,7 @@ class MotorSportEasyApp extends StatelessWidget {
           )
       ),
       defaultTransition: Transition.fadeIn,
-      transitionDuration: Duration(milliseconds: 50),
+      transitionDuration: Duration(milliseconds: 30),
     );
   }
 }
