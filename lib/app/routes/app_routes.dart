@@ -11,6 +11,8 @@ abstract class Routes {
   static const EVENT_DASHBOARD = _Paths.EVENT_DASHBOARD;
   static const EDIT_EVENT_DASHBOARD = _Paths.EDIT_EVENT_DASHBOARD;
   static const CREATE_EVENT_DASHBOARD = _Paths.CREATE_EVENT_DASHBOARD;
+  static const LOGIN = _Paths.LOGIN;
+  static const SIGNUP = _Paths.SIGNUP;
 }
 
 abstract class _Paths {
@@ -23,4 +25,6 @@ abstract class _Paths {
   static const EVENT_DASHBOARD = '/event-dashboard';
   static const EDIT_EVENT_DASHBOARD = '/edit-event-dashboard';
   static const CREATE_EVENT_DASHBOARD = '/create-event-dashboard';
+  static const LOGIN = '/login';
+  static const SIGNUP = '/signup';
 }

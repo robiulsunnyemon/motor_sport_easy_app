@@ -37,6 +37,9 @@ class MotorSportEasyApp extends StatelessWidget {
             border: InputBorder.none,
             enabledBorder: InputBorder.none,
             focusedBorder: InputBorder.none,
+            labelStyle: TextStyle(
+              fontFamily: 'Inter'
+          )
           )
       ),
       defaultTransition: Transition.fadeIn,
