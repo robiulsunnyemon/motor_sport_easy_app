@@ -16,121 +16,67 @@ class EventDashboardView extends GetView<EventDashboardController> {
 
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: screenWidth>700?screenWidth*0.789:double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: screenWidth < 500
-                      ? Wrap(
-                          children: [
-                            Text(
-                              'All events',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 40,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: EventCreateButton(
-                                onTap: () {
-                                  Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
-                                },
-                                level: "Create a Event",
-                              ),
-                            ),
-                          ],
-                        )
-                      : Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'All events',
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 40,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 200,
-                              child: EventCreateButton(
-                                onTap: () {},
-                                level: "Create a Event",
-                              ),
-                            ),
-                          ],
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.025),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  width: screenWidth>700?screenWidth*0.789:double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: screenWidth < 500
+                        ? Wrap(
+                      children: [
+                        Text(
+                          'All events',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 40,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
-                ),
-              ),
-              SizedBox(height: 10),
-              screenWidth>600?Column(
-                children: [
-                  SizedBox(
-                    width: screenWidth>700?screenWidth*0.789:double.infinity,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth > 700 ? 12 : 2,
-                      ),
-                      child: EventDashboardCard(
-                        eventName: "Event Name",
-                        location: "Location",
-                        time: 'Time',
-                        date: 'Date',
-                        sponsor: "Sponsor",
-                        onTap: () {},
-                        index: 1,
-                        isHeader: true,
-                      ),
+                        SizedBox(
+                          width: 200,
+                          child: EventCreateButton(
+                            onTap: () {
+                              Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
+                            },
+                            level: "Create a Event",
+                          ),
+                        ),
+                      ],
+                    )
+                        : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'All events',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 40,
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          child: EventCreateButton(
+                            onTap: () {
+                              Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
+                            },
+                            level: "Create a Event",
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: screenWidth>700?700:300,
-                    width: screenWidth>700?screenWidth*0.789:double.infinity,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      shrinkWrap: true,
-                      physics: ScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth > 700 ? 12 : 2,
-                          ),
-                          child: EventDashboardCard(
-                            eventName: "Dakar",
-                            location: "India",
-                            time: '11:49 pm',
-                            date: '1/28/17',
-                            sponsor: "BMG",
-                            onTap: () {},
-                            index: index,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ):Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withValues(alpha: 0.3),
-                      spreadRadius: 3,
-                      blurRadius: 4,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ]
                 ),
-                child: Column(
+                SizedBox(height: 10),
+                screenWidth>600?Column(
                   children: [
                     SizedBox(
                       width: screenWidth>700?screenWidth*0.789:double.infinity,
@@ -139,7 +85,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
                           horizontal: screenWidth > 700 ? 12 : 2,
                         ),
                         child: EventDashboardCard(
-                          eventName: "Event",
+                          eventName: "Event Name",
                           location: "Location",
                           time: 'Time',
                           date: 'Date',
@@ -178,9 +124,69 @@ class EventDashboardView extends GetView<EventDashboardController> {
                       ),
                     ),
                   ],
+                ):Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withValues(alpha: 0.3),
+                        spreadRadius: 3,
+                        blurRadius: 4,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ]
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: screenWidth>700?screenWidth*0.789:double.infinity,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth > 700 ? 12 : 2,
+                          ),
+                          child: EventDashboardCard(
+                            eventName: "Event",
+                            location: "Location",
+                            time: 'Time',
+                            date: 'Date',
+                            sponsor: "Sponsor",
+                            onTap: () {},
+                            index: 1,
+                            isHeader: true,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: screenWidth>700?700:300,
+                        width: screenWidth>700?screenWidth*0.789:double.infinity,
+                        child: ListView.builder(
+                          itemCount: 10,
+                          shrinkWrap: true,
+                          physics: ScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth > 700 ? 12 : 2,
+                              ),
+                              child: EventDashboardCard(
+                                eventName: "Dakar",
+                                location: "India",
+                                time: '11:49 pm',
+                                date: '1/28/17',
+                                sponsor: "BMG",
+                                onTap: () {
+                                  Get.toNamed(Routes.EDIT_EVENT_DASHBOARD);
+                                },
+                                index: index,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

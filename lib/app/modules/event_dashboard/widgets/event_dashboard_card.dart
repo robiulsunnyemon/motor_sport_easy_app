@@ -47,12 +47,12 @@ class EventDashboardCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                width: screenWidth>700? screenWidth*0.104:80,
+                width: screenWidth>600? screenWidth*0.104:80,
                 child: Text(
                   eventName,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: screenWidth>700?19:14,
+                    fontSize: screenWidth>600?19:14,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
@@ -61,12 +61,12 @@ class EventDashboardCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: screenWidth>700? screenWidth*0.104:65,
+                width: screenWidth>600? screenWidth*0.104:65,
                 child: Text(
                   location,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: screenWidth>700?19:14,
+                    fontSize: screenWidth>600?19:14,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
@@ -80,7 +80,7 @@ class EventDashboardCard extends StatelessWidget {
                   time,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: screenWidth>700?19:14,
+                    fontSize: screenWidth>600?19:14,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
@@ -89,12 +89,12 @@ class EventDashboardCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: screenWidth>700? screenWidth*0.104:50,
+                width: screenWidth>600? screenWidth*0.104:50,
                 child: Text(
                   date,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: screenWidth>700?19:14,
+                    fontSize: screenWidth>600?19:14,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
@@ -103,7 +103,7 @@ class EventDashboardCard extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: screenWidth>700? screenWidth*0.104:70,
+                width: screenWidth>600? screenWidth*0.104:70,
                 child: Row(
                   children: [
                     Text(
@@ -118,8 +118,8 @@ class EventDashboardCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
 
-                    isHeader?SizedBox():screenWidth>700?SizedBox(width: screenWidth*0.0083,):SizedBox(width: 8,),
-                    isHeader?SizedBox():screenWidth>700?GestureDetector(
+                    isHeader?SizedBox():screenWidth>600?SizedBox(width: screenWidth*0.012,):SizedBox(width: 8,),
+                    isHeader?SizedBox():screenWidth>600?GestureDetector(
                       onTap: onTap,
                         child: SvgPicture.asset("svg/verticaldot.svg",)):GestureDetector(
                         onTap: onTap,

@@ -10,10 +10,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:AppBar(
-        toolbarHeight: 120,
-        title: CustomAppbarTitle(),
-      ),
+      appBar: AppBar(toolbarHeight: 120, title: CustomAppbarTitle()),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -32,26 +29,22 @@ class HomeView extends GetView<HomeController> {
           ),
           SliverList.builder(
             itemCount: 7,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: CustomRacingCardButton(
-                    onTap: (){
-                      Get.toNamed(
-                        Routes.RACING_DETAILS,
-                        preventDuplicates: true,
-
-                      );
-                    },
-                    racingName: "Formula E",
-                    sponsorLogo: "",
-                    sponsorName: "BMW",
-                  ),
-                );
-              },
-          )
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CustomRacingCardButton(
+                  onTap: () {
+                    Get.toNamed(Routes.RACING_DETAILS, preventDuplicates: true);
+                  },
+                  racingName: "Formula E",
+                  sponsorLogo: "",
+                  sponsorName: "BMW",
+                ),
+              );
+            },
+          ),
         ],
-      )
+      ),
     );
   }
 }
