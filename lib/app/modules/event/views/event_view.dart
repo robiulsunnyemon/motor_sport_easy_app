@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 
-import '../../widgets/custom_app_bar.dart';
 import '../../widgets/custom_appbar_title.dart';
 import '../../widgets/custom_event_card.dart';
 import '../controllers/event_controller.dart';

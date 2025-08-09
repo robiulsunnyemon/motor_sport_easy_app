@@ -9,8 +9,6 @@ class EventCreateButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final double screenWidth = mediaQuery.size.width;
     return  SizedBox(
       width: double.infinity,
       child: ElevatedButton(

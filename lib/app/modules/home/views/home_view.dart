@@ -16,14 +16,51 @@ class HomeView extends GetView<HomeController> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'Select racing series',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Select racing series',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      controller.showRequestDialog(context);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: ShapeDecoration(
+                        color: const Color(0x4CF93939),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        spacing: 2,
+                        children: [
+                          Icon(Icons.add),
+                          Text(
+                            'Request',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: const Color(0xFF3A3A3A),
+                              fontSize: 12,
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(width: 3,)
+                        ],
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

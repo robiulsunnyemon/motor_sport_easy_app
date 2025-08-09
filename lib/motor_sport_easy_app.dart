@@ -4,13 +4,14 @@ import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'app/routes/app_pages.dart';
 
 class MotorSportEasyApp extends StatelessWidget {
-  const MotorSportEasyApp({super.key});
+  final String initialRoute;
+  const MotorSportEasyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     return  GetMaterialApp(
       title: "MotorSportEasy",
-      initialRoute: AppPages.INITIAL,
+      initialRoute: initialRoute,
       getPages: AppPages.routes,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
