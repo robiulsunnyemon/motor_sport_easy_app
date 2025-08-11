@@ -27,4 +27,5 @@ abstract class _Paths {
   static const CREATE_EVENT_DASHBOARD = '/create-event-dashboard';
   static const LOGIN = '/login';
   static const SIGNUP = '/signup';
+
 }

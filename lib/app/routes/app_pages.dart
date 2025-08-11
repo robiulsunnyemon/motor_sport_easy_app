@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../modules/bottom_navigation_bar/bindings/bottom_navigation_bar_binding.dart';
 import '../modules/bottom_navigation_bar/views/bottom_navigation_bar_view.dart';
 import '../modules/create_event_dashboard/bindings/create_event_dashboard_binding.dart';
@@ -25,8 +24,6 @@ part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
-
-
 
   static const INITIAL = Routes.SIGNUP;
 
@@ -68,7 +65,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CREATE_EVENT_DASHBOARD,
-      page: () => const CreateEventDashboardView(),
+      page: () => CreateEventDashboardView(),
       binding: CreateEventDashboardBinding(),
     ),
     GetPage(

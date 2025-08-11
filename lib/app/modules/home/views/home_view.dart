@@ -36,7 +36,9 @@ class HomeView extends GetView<HomeController> {
                       padding: const EdgeInsets.all(4),
                       decoration: ShapeDecoration(
                         color: const Color(0x4CF93939),
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(4),
+                        ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -55,31 +57,42 @@ class HomeView extends GetView<HomeController> {
                               fontWeight: FontWeight.w400,
                             ),
                           ),
-                          SizedBox(width: 3,)
+                          SizedBox(width: 3),
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
           ),
-          SliverList.builder(
-            itemCount: 7,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomRacingCardButton(
-                  onTap: () {
-                    Get.toNamed(Routes.RACING_DETAILS, preventDuplicates: true);
-                  },
-                  racingName: "Formula E",
-                  sponsorLogo: "",
-                  sponsorName: "BMW",
+          Obx(() {
+            if(controller.events.isEmpty){
+              return SliverToBoxAdapter(
+                child: Center(
+                  child: CircularProgressIndicator(),
                 ),
               );
-            },
-          ),
+            }else{
+              return SliverList.builder(
+                  itemCount: controller.events.length,
+                  itemBuilder: (context, index) {
+                    final event = controller.events[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 7),
+                      child: CustomRacingCardButton(
+                        racingName: event.title,
+                        sponsorName:  event.sponsor,
+                        sponsorLogo: event.logoUrl,
+                        onTap: (){
+                        },
+                      ),
+                    );
+
+                  }
+              );
+            }
+          }),
         ],
       ),
     );

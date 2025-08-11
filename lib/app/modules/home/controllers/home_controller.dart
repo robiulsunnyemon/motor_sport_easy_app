@@ -1,6 +1,8 @@
+import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import '../../../data/model/event_model/event_model.dart';
 import '../../widgets/custom_elevated_button.dart';
 
 class HomeController extends GetxController {
@@ -152,4 +154,42 @@ class HomeController extends GetxController {
     );
   }
 
+
+
+  final RxList<EventModel> events = <EventModel>[].obs;
+
+
+  @override
+  void onInit() {
+    fetchEvents();
+    super.onInit();
+  }
+
+  void fetchEvents() {
+    FirebaseFirestore.instance.collection('events').snapshots().listen((QuerySnapshot snapshot) {
+      events.assignAll(
+        snapshot.docs.map((doc) => EventModel.fromFirestore(doc)).toList(),
+      );
+
+      // ডিবাগিং জন্য প্রিন্ট
+      events.forEach((event) {
+        print('''
+        Event: ${event.title}
+        Date: ${event.date}
+        Time: ${event.time.formattedTime}
+        Location: ${event.location}
+        imageUrl: ${event.logoUrl}
+        id: ${event.id}
+        ---------------------
+        ''');
+      });
+    });
+  }
+
+  @override
+  void onClose() {
+    events.clear();
+    super.onClose();
+  }
 }
+
