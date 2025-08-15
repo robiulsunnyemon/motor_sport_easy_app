@@ -58,24 +58,24 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
               ),
             ),
           ),
-          SliverList.builder(
-            itemCount: 20,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: (){
-                      controller.showMyDialog(context);
-                    },
-                    child: CustomEventCard(
-                      eventDate: DateTime.now(),
-                      eventLocation: "Austria",
-                      tvName: "TV Name",
-                    ),
+          Obx(()=>SliverList.builder(
+            itemCount: controller.events.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GestureDetector(
+                  onTap: (){
+                    controller.showMyDialog(context);
+                  },
+                  child: CustomEventCard(
+                    eventDate: controller.events[index].fullDateTime,
+                    eventLocation: controller.events[index].location,
+                    tvName: controller.events[index].broadcastChannel,
                   ),
-                );
-              },
-          )
+                ),
+              );
+            },
+          ))
 
         ],
       ),

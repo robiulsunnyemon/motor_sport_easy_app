@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventModel {
   final String id;
-  final String title;
+  final String broadcastChannel;
   final String location;
   final String sponsor;
   final String logoUrl;
@@ -13,7 +13,7 @@ class EventModel {
 
   EventModel({
     required this.id,
-    required this.title,
+    required this.broadcastChannel,
     required this.location,
     required this.sponsor,
     required this.logoUrl,
@@ -30,7 +30,7 @@ class EventModel {
 
     return EventModel(
       id: doc.id,
-      title: data['title'] ?? '',
+      broadcastChannel: data['title'] ?? '',
       location: data['location'] ?? '',
       sponsor: data['sponsor'] ?? '',
       logoUrl: data['logoUrl'] ?? '',
@@ -47,7 +47,7 @@ class EventModel {
   // মডেলকে Map এ কনভার্ট করার মেথড (Firebase এ সেভ করতে প্রয়োজন হলে)
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
+      'title': broadcastChannel,
       'location': location,
       'sponsor': sponsor,
       'logoUrl': logoUrl,

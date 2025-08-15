@@ -6,6 +6,7 @@ import '../controllers/create_event_dashboard_controller.dart';
 class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
   const CreateEventDashboardView({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -65,7 +66,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                           SizedBox(
                                             width: 390,
                                             child: Text(
-                                              'Event Name',
+                                              'Broadcast channel',
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 20,
@@ -88,7 +89,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                             ),
                                             child: TextFormField(
                                               controller: controller
-                                                  .eventNameController,
+                                                  .broadcastNameController,
                                               validator: (value) {
                                                 if (value == null ||
                                                     value.isEmpty) {
@@ -98,7 +99,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                               },
                                               decoration: InputDecoration(
                                                 hintText:
-                                                    'write a event name..',
+                                                    'write a channel name..',
                                               ),
                                             ),
                                           ),
@@ -283,124 +284,6 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: double.infinity,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  spacing: 24,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        spacing: 8,
-                                        children: [
-                                          Text(
-                                            'Sponsor name',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 4,
-                                            ),
-                                            decoration: ShapeDecoration(
-                                              color: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8),
-                                              ),
-                                            ),
-                                            child: TextFormField(
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'This Field is required';
-                                                }
-                                                return null;
-                                              },
-                                              controller: controller
-                                                  .sponsorNameController,
-                                              decoration: InputDecoration(
-                                                hintText: 'BMW',
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              //logo section
-                              SizedBox(
-                                width: double.infinity,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  spacing: 24,
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        spacing: 8,
-                                        children: [
-                                          Text(
-                                            'Paste Logo Link',
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontFamily: 'Inter',
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              horizontal: 12,
-                                              vertical: 4,
-                                            ),
-                                            decoration: ShapeDecoration(
-                                              color: Colors.white,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius.circular(8),
-                                              ),
-                                            ),
-                                            child: TextFormField(
-                                              validator: (value) {
-                                                if (value == null ||
-                                                    value.isEmpty) {
-                                                  return 'This Field is required';
-                                                }
-                                                return null;
-                                              },
-                                              controller: controller.imageUrlController,
-                                              decoration: InputDecoration(
-                                                hintText: 'https//:www.google.com/image',
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
                             ],
                           ),
                         ),
@@ -409,7 +292,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                           child: CustomElevatedButton(
                             onTap: () {
                               if (controller.formKey.currentState!.validate()) {
-                                controller.createEvent(context: context);
+                                controller.addEvent(context: context,raceId: controller.raceID);
                               }
                             },
                             level: "Create a event",
@@ -452,7 +335,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                     SizedBox(
                                       width: 390,
                                       child: Text(
-                                        'Event Name',
+                                        'Broadcast channel',
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontSize: 20,
@@ -476,7 +359,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                       ),
                                       child: TextFormField(
                                         controller:
-                                            controller.eventNameController,
+                                            controller.broadcastNameController,
                                         validator: (value) {
                                           if (value == null || value.isEmpty) {
                                             return 'This Field is required';
@@ -484,7 +367,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                           return null;
                                         },
                                         decoration: InputDecoration(
-                                          hintText: 'write a event name..',
+                                          hintText: 'write a channel name..',
                                         ),
                                       ),
                                     ),
@@ -644,94 +527,6 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                                 ),
                               ],
                             ),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: [
-                                Text(
-                                  'Sponsor name',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 4,
-                                  ),
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'This Field is required';
-                                      }
-                                      return null;
-                                    },
-                                    controller:
-                                        controller.sponsorNameController,
-                                    decoration: InputDecoration(
-                                      hintText: 'BMW',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            //logo section
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              spacing: 8,
-                              children: [
-                                Text(
-                                  'Paste Logo Link',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Container(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 12,
-                                    vertical: 4,
-                                  ),
-                                  decoration: ShapeDecoration(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                  child: TextFormField(
-                                    validator: (value) {
-                                      if (value == null ||
-                                          value.isEmpty) {
-                                        return 'This Field is required';
-                                      }
-                                      return null;
-                                    },
-                                    controller: controller.imageUrlController,
-                                    decoration: InputDecoration(
-                                      hintText: 'https//:www.google.com/image',
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-
-
                           ],
                         ),
 
@@ -740,7 +535,7 @@ class CreateEventDashboardView extends GetView<CreateEventDashboardController> {
                           onTap: () {
 
                             if (controller.formKey.currentState!.validate()) {
-                              controller.createEvent(context: context);
+                              controller.addEvent(context: context,raceId: controller.raceID);
                             }
                           },
                           level: "Create a event",

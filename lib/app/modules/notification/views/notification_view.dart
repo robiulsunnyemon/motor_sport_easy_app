@@ -35,7 +35,7 @@ class NotificationView extends GetView<NotificationController> {
                     ),
                   ),
                   IconButton(onPressed: (){
-                    Get.toNamed(Routes.EVENT_DASHBOARD);
+                    Get.toNamed(Routes.RACE_ADMIN);
                   }, icon: Icon(Icons.add_moderator_outlined))
                 ],
               ),

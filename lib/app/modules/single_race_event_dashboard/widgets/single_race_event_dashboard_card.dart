@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
+import 'package:motor_sport_easy/app/routes/app_pages.dart';
 import '../../widgets/custom_elevated_button.dart';
-import '../controllers/event_dashboard_controller.dart';
+import '../controllers/single_race_event_dashboard_controller.dart';
 
-class EventDashboardCard extends StatelessWidget {
+class SingleRaceEventDashboardCard extends StatelessWidget {
   final String broadcastChannel;
   final String location;
   final String time;
@@ -15,8 +13,9 @@ class EventDashboardCard extends StatelessWidget {
   final VoidCallback onTap;
   final int index;
   final bool isHeader;
+  final String eventId;
 
-  const EventDashboardCard({
+  const SingleRaceEventDashboardCard({
     super.key,
     required this.broadcastChannel,
     required this.location,
@@ -26,6 +25,7 @@ class EventDashboardCard extends StatelessWidget {
     required this.onTap,
     required this.index,
     this.isHeader = false,
+    required this.eventId,
   });
 
   @override
@@ -109,7 +109,9 @@ class EventDashboardCard extends StatelessWidget {
               ),
               SizedBox(
                 width: screenWidth>600? screenWidth*0.104:70,
-                child: Icon(Icons.more_vert),
+                child: isHeader? Icon(Icons.more_vert):InkWell( onTap:(){
+                  showRequestDialog(context,eventId);
+                },child:  Icon(Icons.more_vert),),
               ),
             ],
           ),
@@ -119,5 +121,52 @@ class EventDashboardCard extends StatelessWidget {
     );
   }
 
+  Future<void> showRequestDialog(BuildContext context,String eventId) async {
+
+    final singleRaceEventDashboardController = Get.find<SingleRaceEventDashboardController>();
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          title: Text(
+            'What is you want to do?',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+          content: SizedBox(
+            height: 10,
+            width: 300,
+          ),
+          actions: <Widget>[
+            CustomElevatedButton(
+              level: "Delete Event",
+              onTap: (){
+                singleRaceEventDashboardController.deleteEvent(eventId);
+                Get.back();
+              },
+            ),
+            SizedBox(height: 10,),
+            CustomElevatedButton(
+              level: "Update Event",
+              onTap:(){
+                Get.toNamed(
+                    "${Routes.EDIT_EVENT_DASHBOARD}/${singleRaceEventDashboardController.raceID}/$eventId"
+                );
+              },
+              isBackgroundWhite: true,
+              isBorderRed: true,
+            ),
+
+          ],
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        );
+      },
+    );
+  }
 
 }

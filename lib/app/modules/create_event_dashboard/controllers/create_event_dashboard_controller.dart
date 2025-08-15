@@ -4,15 +4,16 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CreateEventDashboardController extends GetxController {
+final String raceID;
+CreateEventDashboardController({required this.raceID});
+
   final formKey = GlobalKey<FormState>();
 
   // Controllers
-  final TextEditingController eventNameController = TextEditingController();
+  final TextEditingController broadcastNameController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
-  final TextEditingController sponsorNameController = TextEditingController();
-  final TextEditingController imageUrlController = TextEditingController();
 
   // Date & Time
   var selectedDate = Rxn<DateTime>();
@@ -44,7 +45,7 @@ class CreateEventDashboardController extends GetxController {
     }
   }
 
-  Future<void> createEvent({required BuildContext context}) async {
+  Future<void> addEvent({required BuildContext context, required String raceId}) async {
     if (!formKey.currentState!.validate()) return;
 
     try {
@@ -62,7 +63,7 @@ class CreateEventDashboardController extends GetxController {
 
       // Create event data
       final eventData = {
-        'title': eventNameController.text,
+        'title': broadcastNameController.text,
         'location': locationController.text,
         'date': selectedDate.value != null
             ? Timestamp.fromDate(selectedDate.value!)
@@ -76,47 +77,44 @@ class CreateEventDashboardController extends GetxController {
         'fullDateTime': eventDateTime != null
             ? Timestamp.fromDate(eventDateTime)
             : null,
-        'sponsor': sponsorNameController.text,
-        'logoUrl': imageUrlController.text.trim(), // সরাসরি ইউজারের দেওয়া URL ব্যবহার
         'createdAt': FieldValue.serverTimestamp(),
       };
 
-      DocumentReference docRef = await FirebaseFirestore.instance.collection('events').add(eventData);
+      DocumentReference docRef =  await FirebaseFirestore.instance
+          .collection('race')
+          .doc(raceId)
+          .collection('events')
+          .add(eventData);
 
       DocumentSnapshot snapshot = await docRef.get();
       if (snapshot.exists) {
-        print('Event created successfully with ID: ${docRef.id}');
         Get.snackbar('Success', 'Event created successfully');
         // Clear form fields
-        eventNameController.clear();
+        broadcastNameController.clear();
         locationController.clear();
         dateController.clear();
         timeController.clear();
-        sponsorNameController.clear();
-        imageUrlController.clear();
         selectedDate.value = null;
         selectedTime.value = null;
 
       } else {
-        print('Event creation failed');
         Get.snackbar('Error', 'Event creation failed');
 
       }
-
 
     } catch (e) {
       Get.snackbar('Error', 'Failed to create event: $e');
     }
   }
 
+
+
   @override
   void dispose() {
-    eventNameController.dispose();
+    broadcastNameController.dispose();
     locationController.dispose();
     dateController.dispose();
     timeController.dispose();
-    sponsorNameController.dispose();
-    imageUrlController.dispose(); // নতুন কন্ট্রোলার ডিসপোজ
     super.dispose();
   }
 }

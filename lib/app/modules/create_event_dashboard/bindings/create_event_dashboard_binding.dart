@@ -5,8 +5,14 @@ import '../controllers/create_event_dashboard_controller.dart';
 class CreateEventDashboardBinding extends Bindings {
   @override
   void dependencies() {
+    final raceId = Get.parameters['raceId'] ?? Get.arguments["raceId"];
+    if (raceId == null || raceId.isEmpty) {
+      print("your race id is null");
+    }
     Get.lazyPut<CreateEventDashboardController>(
-      () => CreateEventDashboardController(),
+      () => CreateEventDashboardController(
+        raceID: raceId,
+      ),
     );
   }
 }

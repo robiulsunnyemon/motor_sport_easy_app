@@ -124,13 +124,11 @@ import 'package:flutter/material.dart';
 
 class CustomRacingCardButton extends StatelessWidget {
   final String racingName;
-  final String sponsorName;
   final String sponsorLogo;
   final VoidCallback onTap;
   const CustomRacingCardButton({
     super.key,
     required this.racingName,
-    required this.sponsorName,
     required this.sponsorLogo,
     required this.onTap,
   });
@@ -171,33 +169,37 @@ class CustomRacingCardButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           spacing: 15,
           children: [
-            SizedBox(
-              width: racingNameWidth,
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  racingName,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: racingNameFontSize,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
+            Expanded(
+              child: SizedBox(
+                width: racingNameWidth,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    racingName,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: racingNameFontSize,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),
-            SizedBox(
-              width: sponsorTextWidth,
-              child: Text(
-                'Sponsored by',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: sponsorTextFontSize,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
+            Expanded(
+              child: SizedBox(
+                width: sponsorTextWidth,
+                child: Text(
+                  'Sponsored by',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: sponsorTextFontSize,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ),
             ),
@@ -231,32 +233,32 @@ class CustomRacingCardButton extends StatelessWidget {
                           },
                         ),
                       ),
-                      Container(
-                        width: screenWidth*0.166,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFF93939),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth * 0.01, // 1% of screen width
-                            vertical: screenHeight * 0.005, // 0.5% of screen height
-                          ),
-                          child: Center(
-                            child: Text(
-                              sponsorName,
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: sponsorNameFontSize,
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w400,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Container(
+                      //   width: screenWidth*0.166,
+                      //   decoration: BoxDecoration(
+                      //     color: Color(0xFFF93939),
+                      //     borderRadius: BorderRadius.circular(4),
+                      //   ),
+                      //   child: Padding(
+                      //     padding: EdgeInsets.symmetric(
+                      //       horizontal: screenWidth * 0.01, // 1% of screen width
+                      //       vertical: screenHeight * 0.005, // 0.5% of screen height
+                      //     ),
+                      //     child: Center(
+                      //       child: Text(
+                      //         sponsorName,
+                      //         style: TextStyle(
+                      //           color: Colors.white,
+                      //           fontSize: sponsorNameFontSize,
+                      //           fontFamily: 'Inter',
+                      //           fontWeight: FontWeight.w400,
+                      //         ),
+                      //         maxLines: 1,
+                      //         overflow: TextOverflow.ellipsis,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

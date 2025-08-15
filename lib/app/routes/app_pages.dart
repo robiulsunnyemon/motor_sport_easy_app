@@ -1,8 +1,13 @@
 import 'package:get/get.dart';
+import 'package:motor_sport_easy/app/modules/update_race_dashboard/bindings/update_race_dashboard_binding.dart';
+import 'package:motor_sport_easy/app/modules/update_race_dashboard/views/update_race_dashboard_view.dart';
+
 import '../modules/bottom_navigation_bar/bindings/bottom_navigation_bar_binding.dart';
 import '../modules/bottom_navigation_bar/views/bottom_navigation_bar_view.dart';
 import '../modules/create_event_dashboard/bindings/create_event_dashboard_binding.dart';
 import '../modules/create_event_dashboard/views/create_event_dashboard_view.dart';
+import '../modules/create_race_admin/bindings/create_race_admin_binding.dart';
+import '../modules/create_race_admin/views/create_race_admin_view.dart';
 import '../modules/edit_event_dashboard/bindings/edit_event_dashboard_binding.dart';
 import '../modules/edit_event_dashboard/views/edit_event_dashboard_view.dart';
 import '../modules/event/bindings/event_binding.dart';
@@ -15,10 +20,14 @@ import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
+import '../modules/race_admin/bindings/race_admin_binding.dart';
+import '../modules/race_admin/views/race_admin_view.dart';
 import '../modules/racing_details/bindings/racing_details_binding.dart';
 import '../modules/racing_details/views/racing_details_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
+import '../modules/single_race_event_dashboard/bindings/single_race_event_dashboard_binding.dart';
+import '../modules/single_race_event_dashboard/views/single_race_event_dashboard_view.dart';
 
 part 'app_routes.dart';
 
@@ -30,7 +39,7 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.HOME,
-      page: () => const HomeView(),
+      page: () => HomeView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -59,13 +68,16 @@ class AppPages {
       binding: EventDashboardBinding(),
     ),
     GetPage(
-      name: _Paths.EDIT_EVENT_DASHBOARD,
+      name: "${_Paths.EDIT_EVENT_DASHBOARD}/:raceId/:eventId",
       page: () => const EditEventDashboardView(),
       binding: EditEventDashboardBinding(),
     ),
+
     GetPage(
-      name: _Paths.CREATE_EVENT_DASHBOARD,
-      page: () => CreateEventDashboardView(),
+      name: "${_Paths.CREATE_EVENT_DASHBOARD}/:raceId",
+      page: () {
+        return CreateEventDashboardView();
+      },
       binding: CreateEventDashboardBinding(),
     ),
     GetPage(
@@ -78,5 +90,27 @@ class AppPages {
       page: () => const SignupView(),
       binding: SignupBinding(),
     ),
+    GetPage(
+      name: _Paths.RACE_ADMIN,
+      page: () => const RaceAdminView(),
+      binding: RaceAdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.CREATE_RACE_ADMIN,
+      page: () => const CreateRaceAdminView(),
+      binding: CreateRaceAdminBinding(),
+    ),
+    GetPage(
+      name: "${_Paths.SINGLE_RACE_EVENT_DASHBOARD}/:raceId",
+      page: () {
+        return SingleRaceEventDashboardView();
+      },
+      binding: SingleRaceEventDashboardBinding(),
+    ),
+    GetPage(
+        name:"${ _Paths.UPDATE_RACE_DASHBOARD}/:raceId",
+        page:()=>UpdateRaceDashboardView(),
+      binding: UpdateRaceDashboardBinding()
+    )
   ];
 }

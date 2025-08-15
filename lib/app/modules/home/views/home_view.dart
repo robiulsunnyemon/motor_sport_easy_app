@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor_sport_easy/app/routes/app_pages.dart';
+import '../../racing_details/controllers/racing_details_controller.dart';
 import '../../widgets/custom_appbar_title.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/custom_racing_card_button.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({super.key});
+   HomeView({super.key});
+  final _raceDetailsController =Get.put(RacingDetailsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +69,7 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           Obx(() {
-            if(controller.events.isEmpty){
+            if(controller.raceList.isEmpty){
               return SliverToBoxAdapter(
                 child: Center(
                   child: CircularProgressIndicator(),
@@ -75,16 +77,17 @@ class HomeView extends GetView<HomeController> {
               );
             }else{
               return SliverList.builder(
-                  itemCount: controller.events.length,
+                  itemCount: controller.raceList.length,
                   itemBuilder: (context, index) {
-                    final event = controller.events[index];
+                    final race = controller.raceList[index];
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 7),
                       child: CustomRacingCardButton(
-                        racingName: event.title,
-                        sponsorName:  event.sponsor,
-                        sponsorLogo: event.logoUrl,
+                        racingName: race.title,
+                        sponsorLogo: race.logoUrl,
                         onTap: (){
+                          Get.toNamed(Routes.RACING_DETAILS);
+                          _raceDetailsController.getEventsByRaceId(controller.raceList[index].id);
                         },
                       ),
                     );

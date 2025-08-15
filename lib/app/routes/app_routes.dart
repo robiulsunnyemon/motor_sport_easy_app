@@ -13,6 +13,14 @@ abstract class Routes {
   static const CREATE_EVENT_DASHBOARD = _Paths.CREATE_EVENT_DASHBOARD;
   static const LOGIN = _Paths.LOGIN;
   static const SIGNUP = _Paths.SIGNUP;
+  static const DEMO_RACE = _Paths.DEMO_RACE;
+  static const DEMO_EVENT = _Paths.DEMO_EVENT;
+  static const DEMO_CREATE_RACE = _Paths.DEMO_CREATE_RACE;
+  static const DEMO_CREATE_EVENT = _Paths.DEMO_CREATE_EVENT;
+  static const RACE_ADMIN = _Paths.RACE_ADMIN;
+  static const CREATE_RACE_ADMIN = _Paths.CREATE_RACE_ADMIN;
+  static const SINGLE_RACE_EVENT_DASHBOARD = _Paths.SINGLE_RACE_EVENT_DASHBOARD;
+  static const UPDATE_RACE_DASHBOARD = _Paths.UPDATE_RACE_DASHBOARD;
 }
 
 abstract class _Paths {
@@ -27,5 +35,12 @@ abstract class _Paths {
   static const CREATE_EVENT_DASHBOARD = '/create-event-dashboard';
   static const LOGIN = '/login';
   static const SIGNUP = '/signup';
-
+  static const DEMO_RACE = '/demo-race';
+  static const DEMO_EVENT = '/demo-event';
+  static const DEMO_CREATE_RACE = '/demo-create-race';
+  static const DEMO_CREATE_EVENT = '/demo-create-event';
+  static const RACE_ADMIN = '/race-admin';
+  static const CREATE_RACE_ADMIN = '/create-race-admin';
+  static const SINGLE_RACE_EVENT_DASHBOARD = '/single-race-event-dashboard';
+  static const UPDATE_RACE_DASHBOARD = '/update-race-dashboard';
 }

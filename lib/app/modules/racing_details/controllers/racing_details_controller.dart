@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/model/event_model/event_model.dart';
 import '../../widgets/set_notification_alert_dialog.dart';
 
 class RacingDetailsController extends GetxController {
@@ -8,8 +10,6 @@ class RacingDetailsController extends GetxController {
   RxBool is8Hour=false.obs;
   RxBool is3Hour=false.obs;
   RxBool is6Hour=false.obs;
-
-
 
 
   void increaseSetHour(){
@@ -50,11 +50,40 @@ class RacingDetailsController extends GetxController {
   Future<void> showMyDialog(BuildContext context) async {
     return showDialog<void>(
       context: context,
-      barrierDismissible: false, // user must tap button!
-
       builder: (BuildContext context) {
         return SetNotificationAlertDialog();
       },
     );
+  }
+
+
+
+  final events = <EventModel>[].obs;
+  final isLoading = false.obs;
+
+
+
+  Future<void> getEventsByRaceId(String raceId) async {
+    try {
+      isLoading(true);
+      events.clear();
+
+      final querySnapshot = await FirebaseFirestore.instance
+          .collection('race')
+          .doc(raceId)
+          .collection('events')
+          .orderBy('createdAt', descending: true)
+          .get();
+
+
+      events.assignAll(
+          querySnapshot.docs.map((doc) => EventModel.fromFirestore(doc)).toList()
+      );
+
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to load events: $e');
+    } finally {
+      isLoading(false);
+    }
   }
 }

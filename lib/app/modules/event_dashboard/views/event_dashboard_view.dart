@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:motor_sport_easy/app/modules/event_dashboard/widgets/event_dashboard_card.dart';
+import 'package:motor_sport_easy/app/modules/widgets/custom_elevated_button.dart';
 
 import '../../../routes/app_pages.dart';
 import '../controllers/event_dashboard_controller.dart';
@@ -41,11 +42,11 @@ class EventDashboardView extends GetView<EventDashboardController> {
                         ),
                         SizedBox(
                           width: 200,
-                          child: EventCreateButton(
+                          child: CustomElevatedButton(
                             onTap: () {
-                              Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
+                              Get.toNamed(Routes.RACE_ADMIN);
                             },
-                            level: "Create a Event",
+                            level: "Dashboard",
                           ),
                         ),
                       ],
@@ -64,11 +65,11 @@ class EventDashboardView extends GetView<EventDashboardController> {
                         ),
                         SizedBox(
                           width: 200,
-                          child: EventCreateButton(
+                          child: CustomElevatedButton(
                             onTap: () {
-                              Get.toNamed(Routes.CREATE_EVENT_DASHBOARD);
+                              Get.toNamed(Routes.RACE_ADMIN);
                             },
-                            level: "Create a Event",
+                            level: "Dashboard",
                           ),
                         ),
                       ],
@@ -85,7 +86,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
                           horizontal: screenWidth > 700 ? 12 : 2,
                         ),
                         child: EventDashboardCard(
-                          eventName: "Event Name",
+                          broadcastChannel: "Channel Name",
                           location: "Location",
                           time: 'Time',
                           date: 'Date',
@@ -99,8 +100,8 @@ class EventDashboardView extends GetView<EventDashboardController> {
                     SizedBox(
                       height: screenWidth>700?700:300,
                       width: screenWidth>700?screenWidth*0.789:double.infinity,
-                      child: ListView.builder(
-                        itemCount: 10,
+                      child: Obx(()=>ListView.builder(
+                        itemCount: controller.events.length,
                         shrinkWrap: true,
                         physics: ScrollPhysics(),
                         itemBuilder: (context, index) {
@@ -109,11 +110,11 @@ class EventDashboardView extends GetView<EventDashboardController> {
                               horizontal: screenWidth > 700 ? 12 : 2,
                             ),
                             child: EventDashboardCard(
-                              eventName: "Dakar",
-                              location: "India",
-                              time: '11:49 pm',
-                              date: '1/28/17',
-                              sponsor: "BMG",
+                              broadcastChannel: controller.events[index].broadcastChannel,
+                              location: controller.events[index].location,
+                              time: controller.events[index].fullDateTime.toString(),
+                              date: controller.events[index].fullDateTime.toString(),
+                              sponsor: controller.events[index].logoUrl,
                               onTap: () {
                                 Get.toNamed(Routes.EDIT_EVENT_DASHBOARD);
                               },
@@ -121,7 +122,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
                             ),
                           );
                         },
-                      ),
+                      ),)
                     ),
                   ],
                 ):Container(
@@ -144,7 +145,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
                             horizontal: screenWidth > 700 ? 12 : 2,
                           ),
                           child: EventDashboardCard(
-                            eventName: "Event",
+                            broadcastChannel: "Channel",
                             location: "Location",
                             time: 'Time',
                             date: 'Date',
@@ -158,8 +159,8 @@ class EventDashboardView extends GetView<EventDashboardController> {
                       SizedBox(
                         height: screenWidth>700?700:300,
                         width: screenWidth>700?screenWidth*0.789:double.infinity,
-                        child: ListView.builder(
-                          itemCount: 10,
+                        child: Obx(()=> ListView.builder(
+                          itemCount: controller.events.length,
                           shrinkWrap: true,
                           physics: ScrollPhysics(),
                           itemBuilder: (context, index) {
@@ -168,11 +169,11 @@ class EventDashboardView extends GetView<EventDashboardController> {
                                 horizontal: screenWidth > 700 ? 12 : 2,
                               ),
                               child: EventDashboardCard(
-                                eventName: "Dakar",
-                                location: "India",
-                                time: '11:49 pm',
-                                date: '1/28/17',
-                                sponsor: "BMG",
+                                broadcastChannel: controller.events[index].broadcastChannel,
+                                location: controller.events[index].location,
+                                time: controller.events[index].fullDateTime.toString(),
+                                date: controller.events[index].fullDateTime.toString(),
+                                sponsor: controller.events[index].logoUrl,
                                 onTap: () {
                                   Get.toNamed(Routes.EDIT_EVENT_DASHBOARD);
                                 },
@@ -180,7 +181,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
                               ),
                             );
                           },
-                        ),
+                        ),)
                       ),
                     ],
                   ),
