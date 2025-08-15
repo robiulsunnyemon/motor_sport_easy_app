@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:motor_sport_easy/app/modules/race_admin/controllers/race_admin_controller.dart';
 import 'package:motor_sport_easy/app/routes/app_pages.dart';
 
-import '../../../data/model/race_model/race_model.dart';
 import '../../widgets/custom_elevated_button.dart';
 
 class RaceDashboardCard extends StatelessWidget {

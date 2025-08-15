@@ -143,12 +143,12 @@ class CustomRacingCardButton extends StatelessWidget {
     final double racingNameWidth = screenWidth * 0.32; // 32% of screen width
     final double sponsorTextWidth = screenWidth * 0.2; // 20% of screen width
     final double logoSize = screenHeight * 0.05; // 5% of screen height
-    final double sponsorNameWidth = screenWidth * 0.15; // 15% of screen width
+
 
     // Font sizes
     final double racingNameFontSize = screenWidth * 0.04; // 4% of screen width
     final double sponsorTextFontSize = screenWidth * 0.03; // 3% of screen width
-    final double sponsorNameFontSize = screenWidth * 0.025; // 2.5% of screen width
+
 
     return ElevatedButton(
       onPressed: onTap,

@@ -6,7 +6,6 @@ import 'package:motor_sport_easy/app/modules/widgets/custom_elevated_button.dart
 
 import '../../../routes/app_pages.dart';
 import '../controllers/event_dashboard_controller.dart';
-import '../widgets/event_create_button.dart';
 
 class EventDashboardView extends GetView<EventDashboardController> {
   const EventDashboardView({super.key});
