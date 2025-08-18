@@ -7,7 +7,7 @@ class CreateEventDashboardBinding extends Bindings {
   void dependencies() {
     final raceId = Get.parameters['raceId'] ?? Get.arguments["raceId"];
     if (raceId == null || raceId.isEmpty) {
-      print("your race id is null");
+
     }
     Get.lazyPut<CreateEventDashboardController>(
       () => CreateEventDashboardController(

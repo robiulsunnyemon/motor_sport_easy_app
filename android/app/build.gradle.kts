@@ -42,6 +42,12 @@ android {
     }
 }
 
+
+dependencies {
+    implementation("com.google.firebase:firebase-messaging:23.1.0")
+}
+
+
 flutter {
     source = "../.."
 }

@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:motor_sport_easy/app/modules/single_race_event_dashboard/controllers/single_race_event_dashboard_controller.dart';
 
 class CreateEventDashboardController extends GetxController {
 final String raceID;
 CreateEventDashboardController({required this.raceID});
-
+  final singleRaceEventController=Get.find<SingleRaceEventDashboardController>();
   final formKey = GlobalKey<FormState>();
 
   // Controllers
@@ -96,6 +97,10 @@ CreateEventDashboardController({required this.raceID});
         timeController.clear();
         selectedDate.value = null;
         selectedTime.value = null;
+
+        //get all data
+        singleRaceEventController.getEventsByRaceId(raceId);
+
 
       } else {
         Get.snackbar('Error', 'Event creation failed');

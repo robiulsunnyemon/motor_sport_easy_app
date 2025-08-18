@@ -64,7 +64,6 @@ class EventDashboardController extends GetxController {
 
       return allEvents;
     } catch (e) {
-      print('Error fetching all events: $e');
       throw Exception('Failed to get all events');
     }
   }

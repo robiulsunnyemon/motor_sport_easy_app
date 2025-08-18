@@ -3,9 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/model/race_model/race_model.dart';
+import '../../../shared_pref_helper/shared_pref_helper.dart';
 import '../../widgets/custom_elevated_button.dart';
 
 class HomeController extends GetxController {
+
+  final TextEditingController requestRaceNameController=TextEditingController();
+  final TextEditingController reportMessageController=TextEditingController();
 
   Future<void> showRequestDialog(BuildContext context) async {
     return showDialog<void>(
@@ -70,6 +74,7 @@ class HomeController extends GetxController {
             height: 100,
             width: 300,
             child: TextFormField(
+              controller: requestRaceNameController,
               decoration: InputDecoration(
                 hintText: "Write your request...",
                 hintStyle: TextStyle(
@@ -91,7 +96,7 @@ class HomeController extends GetxController {
             CustomElevatedButton(
               level: "Send a Request",
               onTap: (){
-                Get.back();
+                submitRaceRequest(requestRaceNameController.text );
               },
             ),
           ],
@@ -120,6 +125,7 @@ class HomeController extends GetxController {
             height: 100,
             width: 300,
             child: TextFormField(
+              controller: reportMessageController,
               decoration: InputDecoration(
                 hintText: "Write your report hare...",
                 hintStyle: TextStyle(
@@ -141,7 +147,7 @@ class HomeController extends GetxController {
             CustomElevatedButton(
               level: "Send a Request",
               onTap: (){
-                Get.back();
+                submitReport(reportMessageController.text);
               },
             ),
           ],
@@ -172,6 +178,41 @@ class HomeController extends GetxController {
       });
     } catch (e) {
       Get.snackbar('Error', 'Failed to fetch races: $e');
+    }
+  }
+
+
+  Future<void> submitRaceRequest(String raceName) async {
+    try {
+
+      String? uid = await SharedPrefHelper.getUid();
+      if(uid != null){
+        await _firestore.collection('request_race').add({
+          'userID': uid,
+          'raceName': raceName,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+        Get.snackbar('Success', 'Race request submitted successfully!');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to submit request: ${e.toString()}');
+    }
+  }
+
+  Future<void> submitReport(String reportName) async {
+    try {
+
+      String? uid = await SharedPrefHelper.getUid();
+      if(uid != null){
+        await _firestore.collection('report').add({
+          'userID': uid,
+          'raceName': reportName,
+          'timestamp': FieldValue.serverTimestamp(),
+        });
+        Get.snackbar('Success', 'Race request submitted successfully!');
+      }
+    } catch (e) {
+      Get.snackbar('Error', 'Failed to submit request: ${e.toString()}');
     }
   }
 

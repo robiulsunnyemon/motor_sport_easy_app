@@ -1,4 +1,10 @@
 import 'package:get/get.dart';
+import 'package:motor_sport_easy/app/modules/report_admin/bindings/report_admin_binding.dart';
+import 'package:motor_sport_easy/app/modules/report_admin/views/report_admin_view.dart';
+import 'package:motor_sport_easy/app/modules/request_admin/bindings/request_admin_binding.dart';
+import 'package:motor_sport_easy/app/modules/request_admin/views/request_admin_view.dart';
+import 'package:motor_sport_easy/app/modules/request_race/bindings/request_race_binding.dart';
+import 'package:motor_sport_easy/app/modules/request_race/views/request_race_view.dart';
 import 'package:motor_sport_easy/app/modules/update_race_dashboard/bindings/update_race_dashboard_binding.dart';
 import 'package:motor_sport_easy/app/modules/update_race_dashboard/views/update_race_dashboard_view.dart';
 
@@ -37,11 +43,7 @@ class AppPages {
   static const INITIAL = Routes.SIGNUP;
 
   static final routes = [
-    GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
-    ),
+    GetPage(name: _Paths.HOME, page: () => HomeView(), binding: HomeBinding()),
     GetPage(
       name: _Paths.EVENT,
       page: () => const EventView(),
@@ -108,9 +110,25 @@ class AppPages {
       binding: SingleRaceEventDashboardBinding(),
     ),
     GetPage(
-        name:"${ _Paths.UPDATE_RACE_DASHBOARD}/:raceId",
-        page:()=>UpdateRaceDashboardView(),
-      binding: UpdateRaceDashboardBinding()
-    )
+      name: "${_Paths.UPDATE_RACE_DASHBOARD}/:raceId",
+      page: () => UpdateRaceDashboardView(),
+      binding: UpdateRaceDashboardBinding(),
+    ),
+
+    GetPage(
+      name: _Paths.REQUEST_RACE,
+      page: () => RequestRaceView(),
+      binding: RequestRaceBinding(),
+    ),
+    GetPage(
+      name: _Paths.REQUEST_ADMIN,
+      page: () => RequestAdminView(),
+      binding: RequestAdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.REPORT_ADMIN,
+      page: () => ReportAdminView(),
+      binding: ReportAdminBinding(),
+    ),
   ];
 }

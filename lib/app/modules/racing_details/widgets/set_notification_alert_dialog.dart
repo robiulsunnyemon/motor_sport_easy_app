@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../racing_details/controllers/racing_details_controller.dart';
-import 'custom_elevated_button.dart';
+import '../controllers/racing_details_controller.dart';
+import '../../widgets/custom_elevated_button.dart';
 
 class SetNotificationAlertDialog extends StatelessWidget {
-   SetNotificationAlertDialog({super.key});
+  final String eventId;
+  final String raceId;
+
+SetNotificationAlertDialog({super.key, required this.eventId, required this.raceId});
 
   final _controller = Get.put(RacingDetailsController());
+   final List<int> selectedTimes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -47,41 +51,7 @@ class SetNotificationAlertDialog extends StatelessWidget {
                     value: _controller.is8Hour.value,
                     activeColor: Colors.red,
                     onChanged: (bool value) {
-                      _controller.set8Hour();
-                    },
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF3F4F6),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '3 Hour before race',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  Switch(
-                    value: _controller.is3Hour.value,
-                    activeColor: Colors.red,
-                    onChanged: (bool value) {
-                      _controller.set3Hour();
+                      selectedTimes.add(8);
                     },
                   ),
                 ],
@@ -112,10 +82,44 @@ class SetNotificationAlertDialog extends StatelessWidget {
                     ),
                   ),
                   Switch(
+                    value: _controller.is3Hour.value,
+                    activeColor: Colors.red,
+                    onChanged: (bool value) {
+                      selectedTimes.add(6);
+                    },
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: ShapeDecoration(
+                color: const Color(0xFFF3F4F6),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(4),
+                ),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    '3 Hour before race',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontFamily: 'Inter',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  Switch(
                     value: _controller.is6Hour.value,
                     activeColor: Colors.red,
                     onChanged: (bool value) {
-                      _controller.set6Hour();
+                      selectedTimes.add(3);
                     },
                   ),
                 ],
@@ -196,6 +200,12 @@ class SetNotificationAlertDialog extends StatelessWidget {
           level: "Save",
           onTap: (){
             Get.back();
+            selectedTimes.add(_controller.setHour.value);
+            _controller.saveNotificationPreferences(
+                eventId: eventId,
+                times: selectedTimes,
+                context: context
+            );
           },
         )
       ],

@@ -34,8 +34,12 @@ class RaceAdminView extends GetView<RaceAdminController> {
                         ? Column(
                           children: [
                             CustomElevatedButton(onTap: (){
-                              Get.toNamed(Routes.EVENT_DASHBOARD);
-                            }, level: "All Events"),
+                              Get.toNamed(Routes.REQUEST_ADMIN);
+                            }, level: "Request Race"),
+                            SizedBox(height: 10),
+                            CustomElevatedButton(onTap: (){
+                              Get.toNamed(Routes.REPORT_ADMIN);
+                            }, level: "Report"),
                             SizedBox(height: 10),
                             RaceCreateButton(
                                onTap: () {
@@ -65,9 +69,18 @@ class RaceAdminView extends GetView<RaceAdminController> {
                                   Expanded(
                                     child: CustomElevatedButton(
                                       onTap: () {
-                                        Get.toNamed(Routes.EVENT_DASHBOARD);
+                                        Get.toNamed(Routes.REPORT_ADMIN);
                                       },
-                                      level: "All Events",
+                                      level: "All Report",
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Expanded(
+                                    child: CustomElevatedButton(
+                                      onTap: () {
+                                        Get.toNamed(Routes.REQUEST_ADMIN);
+                                      },
+                                      level: "Request Race",
                                     ),
                                   ),
                                   SizedBox(width: 10),

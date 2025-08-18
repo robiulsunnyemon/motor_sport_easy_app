@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import '../../../data/model/event_model/event_model.dart';
-import '../../widgets/set_notification_alert_dialog.dart';
+import '../widgets/set_notification_alert_dialog.dart';
 
 class RacingDetailsController extends GetxController {
   RxInt setHour=1.obs;
@@ -47,11 +50,14 @@ class RacingDetailsController extends GetxController {
     update();
   }
 
-  Future<void> showMyDialog(BuildContext context) async {
+  Future<void> showMyDialog({required BuildContext context,required String eventId}) async {
     return showDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return SetNotificationAlertDialog();
+        return SetNotificationAlertDialog(
+          eventId: eventId,
+          raceId: '',
+        );
       },
     );
   }
@@ -84,6 +90,103 @@ class RacingDetailsController extends GetxController {
       Get.snackbar('Error', 'Failed to load events: $e');
     } finally {
       isLoading(false);
+    }
+  }
+
+
+
+
+  Future<void> saveNotificationPreferences({required String eventId,
+  required  List<int> times,
+  required  BuildContext context,
+  }) async {
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    try {
+      final userId = FirebaseAuth.instance.currentUser?.uid;
+      if (userId == null) {
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text('Not logged in. Please log in first'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      // Show loading indicator
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Row(
+            children: [
+              CircularProgressIndicator(color: Colors.white),
+              SizedBox(width: 10),
+              Text('Saving preferences...'),
+            ],
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+
+      final fcmToken = await FirebaseMessaging.instance.getToken();
+      if (fcmToken == null) {
+        scaffoldMessenger.showSnackBar(
+          SnackBar(
+            content: Text('Failed to get notification token'),
+            backgroundColor: Colors.red,
+          ),
+        );
+        return;
+      }
+
+      await FirebaseFirestore.instance
+          .collection('user_event_subscriptions')
+          .doc('$userId-$eventId')
+          .set({
+        'userId': userId,
+        'eventId': eventId,
+        'notificationTimes': times,
+        'fcmTokens': FieldValue.arrayUnion([fcmToken]),
+        'updatedAt': FieldValue.serverTimestamp(),
+      }, SetOptions(merge: true));
+
+      // Show success message
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Notification preferences saved successfully'),
+          backgroundColor: Colors.green,
+        ),
+      );
+
+    } on FirebaseException catch (e) {
+      // Handle Firebase specific errors
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Firebase error: ${e.message ?? 'Unknown error'}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      print('Firebase error: ${e.stackTrace}');
+
+    } on PlatformException catch (e) {
+      // Handle platform specific errors (FCM token related)
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Device error: ${e.message ?? 'Unknown error'}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+
+
+    } catch (e) {
+      // Handle all other errors
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text('Error occurred: ${e.toString()}'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      print('General error: $e');
     }
   }
 }

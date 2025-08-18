@@ -65,7 +65,7 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                 padding: const EdgeInsets.all(8.0),
                 child: GestureDetector(
                   onTap: (){
-                    controller.showMyDialog(context);
+                    controller.showMyDialog(context: context,eventId: controller.events[index].id);
                   },
                   child: CustomEventCard(
                     eventDate: controller.events[index].fullDateTime,
@@ -81,4 +81,7 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
       ),
     );
   }
+
+
+
 }

@@ -75,7 +75,6 @@ class UpdateRaceDashboardController extends GetxController {
           backgroundColor: Colors.green,
           colorText: Colors.white);
     } catch (e) {
-      print(e.toString());
       if (Get.isDialogOpen!) Get.back();
       Get.snackbar('Error', 'Failed to update race: $e',
           snackPosition: SnackPosition.BOTTOM,
