@@ -1,12 +1,4 @@
 import 'package:get/get.dart';
-import 'package:motor_sport_easy/app/modules/report_admin/bindings/report_admin_binding.dart';
-import 'package:motor_sport_easy/app/modules/report_admin/views/report_admin_view.dart';
-import 'package:motor_sport_easy/app/modules/request_admin/bindings/request_admin_binding.dart';
-import 'package:motor_sport_easy/app/modules/request_admin/views/request_admin_view.dart';
-import 'package:motor_sport_easy/app/modules/request_race/bindings/request_race_binding.dart';
-import 'package:motor_sport_easy/app/modules/request_race/views/request_race_view.dart';
-import 'package:motor_sport_easy/app/modules/update_race_dashboard/bindings/update_race_dashboard_binding.dart';
-import 'package:motor_sport_easy/app/modules/update_race_dashboard/views/update_race_dashboard_view.dart';
 
 import '../modules/bottom_navigation_bar/bindings/bottom_navigation_bar_binding.dart';
 import '../modules/bottom_navigation_bar/views/bottom_navigation_bar_view.dart';
@@ -24,16 +16,26 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/login/bindings/login_binding.dart';
 import '../modules/login/views/login_view.dart';
+import '../modules/login_dashboard/bindings/login_dashboard_binding.dart';
+import '../modules/login_dashboard/views/login_dashboard_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
 import '../modules/race_admin/bindings/race_admin_binding.dart';
 import '../modules/race_admin/views/race_admin_view.dart';
 import '../modules/racing_details/bindings/racing_details_binding.dart';
 import '../modules/racing_details/views/racing_details_view.dart';
+import '../modules/report_admin/bindings/report_admin_binding.dart';
+import '../modules/report_admin/views/report_admin_view.dart';
+import '../modules/request_admin/bindings/request_admin_binding.dart';
+import '../modules/request_admin/views/request_admin_view.dart';
+import '../modules/request_race/bindings/request_race_binding.dart';
+import '../modules/request_race/views/request_race_view.dart';
 import '../modules/signup/bindings/signup_binding.dart';
 import '../modules/signup/views/signup_view.dart';
 import '../modules/single_race_event_dashboard/bindings/single_race_event_dashboard_binding.dart';
 import '../modules/single_race_event_dashboard/views/single_race_event_dashboard_view.dart';
+import '../modules/update_race_dashboard/bindings/update_race_dashboard_binding.dart';
+import '../modules/update_race_dashboard/views/update_race_dashboard_view.dart';
 
 part 'app_routes.dart';
 
@@ -74,7 +76,6 @@ class AppPages {
       page: () => const EditEventDashboardView(),
       binding: EditEventDashboardBinding(),
     ),
-
     GetPage(
       name: "${_Paths.CREATE_EVENT_DASHBOARD}/:raceId",
       page: () {
@@ -114,7 +115,6 @@ class AppPages {
       page: () => UpdateRaceDashboardView(),
       binding: UpdateRaceDashboardBinding(),
     ),
-
     GetPage(
       name: _Paths.REQUEST_RACE,
       page: () => RequestRaceView(),
@@ -129,6 +129,11 @@ class AppPages {
       name: _Paths.REPORT_ADMIN,
       page: () => ReportAdminView(),
       binding: ReportAdminBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGIN_DASHBOARD,
+      page: () => const LoginDashboardView(),
+      binding: LoginDashboardBinding(),
     ),
   ];
 }

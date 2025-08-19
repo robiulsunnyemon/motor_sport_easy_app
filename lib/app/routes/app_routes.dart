@@ -24,6 +24,7 @@ abstract class Routes {
   static const REQUEST_RACE = _Paths.REQUEST_RACE;
   static const REQUEST_ADMIN = _Paths.REQUEST_ADMIN;
   static const REPORT_ADMIN = _Paths.REPORT_ADMIN;
+  static const LOGIN_DASHBOARD = _Paths.LOGIN_DASHBOARD;
 }
 
 abstract class _Paths {
@@ -49,4 +50,5 @@ abstract class _Paths {
   static const REQUEST_RACE = '/request-race';
   static const REQUEST_ADMIN = '/request-admin';
   static const REPORT_ADMIN = '/report-admin';
+  static const LOGIN_DASHBOARD = '/login-dashboard';
 }
