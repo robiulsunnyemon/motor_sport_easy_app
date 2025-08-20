@@ -76,14 +76,27 @@ class CustomAppbarTitle extends StatelessWidget {
                     width: 16,
                     height: 16,
                     decoration: ShapeDecoration(
+                      color: Colors.white,
                       shape: RoundedRectangleBorder(
-                        side: BorderSide(width: 3, color: Colors.white),
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(2),
+                      ),
+                    ),
+                    child: Center(
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: ShapeDecoration(
+                          color: Colors.red,
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 3, color: Colors.white),
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                        ),
                       ),
                     ),
                   ),
                   Text(
-                    'BMW',
+                    'DAVE REMAPS',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 10,

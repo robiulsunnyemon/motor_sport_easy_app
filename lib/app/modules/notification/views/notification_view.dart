@@ -34,9 +34,6 @@ class NotificationView extends GetView<NotificationController> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  IconButton(onPressed: (){
-                    Get.toNamed(Routes.RACE_ADMIN);
-                  }, icon: Icon(Icons.add_moderator_outlined))
                 ],
               ),
             ),

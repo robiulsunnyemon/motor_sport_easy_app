@@ -93,7 +93,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                     Text(
-                      'BMW',
+                      'DAVE REMAPS',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 10,

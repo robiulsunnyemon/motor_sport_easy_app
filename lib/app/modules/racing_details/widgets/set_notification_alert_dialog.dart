@@ -6,8 +6,11 @@ import '../../widgets/custom_elevated_button.dart';
 class SetNotificationAlertDialog extends StatelessWidget {
   final String eventId;
   final String raceId;
+  final String eventName;
+  final DateTime eventDate;
+  final double hour;
 
-SetNotificationAlertDialog({super.key, required this.eventId, required this.raceId});
+SetNotificationAlertDialog({super.key, required this.eventId, required this.raceId, required this.eventName, required this.eventDate, required this.hour});
 
   final _controller = Get.put(RacingDetailsController());
    final List<int> selectedTimes = [];
@@ -199,13 +202,10 @@ SetNotificationAlertDialog({super.key, required this.eventId, required this.race
         CustomElevatedButton(
           level: "Save",
           onTap: (){
+
             Get.back();
             selectedTimes.add(_controller.setHour.value);
-            _controller.saveNotificationPreferences(
-                eventId: eventId,
-                times: selectedTimes,
-                context: context
-            );
+            _controller.sendNotificationToApi(eventName: eventName, date: eventDate, hour: hour);
           },
         )
       ],
