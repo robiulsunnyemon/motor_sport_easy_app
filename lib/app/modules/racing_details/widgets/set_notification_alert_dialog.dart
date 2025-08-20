@@ -8,7 +8,7 @@ class SetNotificationAlertDialog extends StatelessWidget {
   final String raceId;
   final String eventName;
   final DateTime eventDate;
-  final double hour;
+  final int hour;
 
 SetNotificationAlertDialog({super.key, required this.eventId, required this.raceId, required this.eventName, required this.eventDate, required this.hour});
 
@@ -55,6 +55,11 @@ SetNotificationAlertDialog({super.key, required this.eventId, required this.race
                     activeColor: Colors.red,
                     onChanged: (bool value) {
                       selectedTimes.add(8);
+                      _controller.set8Hour(
+                          eventName:eventName,
+                          date: eventDate, hour: 8
+                      );
+
                     },
                   ),
                 ],
@@ -85,10 +90,16 @@ SetNotificationAlertDialog({super.key, required this.eventId, required this.race
                     ),
                   ),
                   Switch(
-                    value: _controller.is3Hour.value,
+                    value: _controller.is6Hour.value,
                     activeColor: Colors.red,
                     onChanged: (bool value) {
                       selectedTimes.add(6);
+                      _controller.set6Hour(
+                        eventName: eventName,
+                        date: eventDate,
+                        hour: 6,
+
+                      );
                     },
                   ),
                 ],
@@ -119,10 +130,12 @@ SetNotificationAlertDialog({super.key, required this.eventId, required this.race
                     ),
                   ),
                   Switch(
-                    value: _controller.is6Hour.value,
+                    value: _controller.is3Hour.value,
                     activeColor: Colors.red,
                     onChanged: (bool value) {
                       selectedTimes.add(3);
+                      _controller.set3Hour(
+                          eventName:eventName, date: eventDate, hour: 3);
                     },
                   ),
                 ],
@@ -202,10 +215,9 @@ SetNotificationAlertDialog({super.key, required this.eventId, required this.race
         CustomElevatedButton(
           level: "Save",
           onTap: (){
-
             Get.back();
             selectedTimes.add(_controller.setHour.value);
-            _controller.sendNotificationToApi(eventName: eventName, date: eventDate, hour: hour);
+            _controller.sendNotificationToApi(eventName: eventName, date: eventDate, hour: _controller.setHour.value);
           },
         )
       ],

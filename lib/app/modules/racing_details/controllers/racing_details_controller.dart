@@ -1,10 +1,6 @@
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,8 +26,13 @@ class RacingDetailsController extends GetxController {
     }
   }
 
-  void set8Hour() {
+  void set8Hour({
+    required String eventName,
+    required DateTime date,
+    required int hour,
+  }) {
     if (is8Hour.value == false) {
+      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
       is8Hour.value = true;
     } else {
       is8Hour.value = false;
@@ -39,8 +40,13 @@ class RacingDetailsController extends GetxController {
     update();
   }
 
-  void set3Hour() {
+  void set3Hour({
+    required String eventName,
+    required DateTime date,
+    required int hour,
+  }) {
     if (is3Hour.value == false) {
+      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
       is3Hour.value = true;
     } else {
       is3Hour.value = false;
@@ -48,8 +54,13 @@ class RacingDetailsController extends GetxController {
     update();
   }
 
-  void set6Hour() {
+  void set6Hour({
+    required String eventName,
+    required DateTime date,
+    required int hour,
+  }) {
     if (is6Hour.value == false) {
+      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
       is6Hour.value = true;
     } else {
       is6Hour.value = false;
@@ -62,7 +73,7 @@ class RacingDetailsController extends GetxController {
     required String eventId,
     required String eventName,
     required DateTime eventDate,
-    required double hour,
+    required int hour,
   }) async {
     return showDialog<void>(
       context: context,
@@ -106,14 +117,14 @@ class RacingDetailsController extends GetxController {
   Future<void> sendNotificationToApi({
     required String eventName,
     required DateTime date,
-    required double hour,
+    required int hour,
   }) async {
     const String apiUrl =
         "https://motogp.mtscorporate.com/api/users/schedule-notification";
     String? uid = await SharedPrefHelper.getUid();
     if (uid != null) {
       String formattedEventDate = date.toUtc().toIso8601String();
-      print(formattedEventDate);
+
       Map<String, dynamic> requestBody = {
         "uid": uid,
         "gameDetails": {
@@ -122,6 +133,7 @@ class RacingDetailsController extends GetxController {
         },
         "hoursBefore": hour,
       };
+      print(hour);
 
       try {
         final response = await http.post(

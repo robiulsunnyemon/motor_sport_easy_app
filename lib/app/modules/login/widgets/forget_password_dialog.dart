@@ -51,9 +51,11 @@ class ForgotPasswordDialog extends StatelessWidget {
                 Get.snackbar("Error", e.toString());
               }
 
+
             },
 
             level: "Send Reset Link",
+
           ),
         ),
       ],

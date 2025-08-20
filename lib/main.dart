@@ -11,7 +11,8 @@ Future<void> main() async {
   final String? uid = await SharedPrefHelper.getUid();
   runApp(
     MotorSportEasyApp(
-      initialRoute: uid != null? Routes.BOTTOM_NAVIGATION_BAR:Routes.LOGIN,
+      // initialRoute: uid != null? Routes.BOTTOM_NAVIGATION_BAR:Routes.LOGIN,
+      initialRoute: Routes.LOGIN,
     ),
   );
 }
