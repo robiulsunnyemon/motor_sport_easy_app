@@ -10,21 +10,23 @@ class EventView extends GetView<EventController> {
   const EventView({super.key});
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar:AppBar(
-        toolbarHeight: 120,
+        toolbarHeight: screenHeight*120/752,
         title: CustomAppbarTitle(),
       ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 15),
+              padding:  EdgeInsets.symmetric(horizontal: screenWidth*8.0/360,vertical: screenWidth*15/360),
               child: Text(
                 'Upcoming Events',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 24,
+                  fontSize: screenWidth*24/360,
                   fontFamily: 'Inter',
                   fontWeight: FontWeight.w500,
                 ),

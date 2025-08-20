@@ -11,8 +11,11 @@ class HomeView extends GetView<HomeController> {
   final _raceDetailsController =Get.put(RacingDetailsController());
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      appBar: AppBar(toolbarHeight: 120, title: CustomAppbarTitle()),
+      appBar: AppBar(toolbarHeight: screenHeight*120/752, title: CustomAppbarTitle()),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -21,13 +24,17 @@ class HomeView extends GetView<HomeController> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Select racing series',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
+                  SizedBox(
+                    width: screenWidth*.556,
+                    child: Text(
+                      'Select racing series',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: screenWidth*24/360,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w500,
+                      ),
+                      maxLines: 1,
                     ),
                   ),
                   InkWell(

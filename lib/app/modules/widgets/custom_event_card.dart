@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 class CustomEventCard extends StatelessWidget {
   final String eventLocation;
   final DateTime eventDate;
@@ -8,6 +9,7 @@ class CustomEventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(
@@ -35,17 +37,17 @@ class CustomEventCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: screenWidth*16/360,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w500,
                   ),
                 ),
                 Text(
-                  '24/08/2025',
+                  DateFormat.yMd().format(eventDate),
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
-                    fontSize: 16,
+                    fontSize: screenWidth*16/360,
                     fontFamily: 'Inter',
                     fontWeight: FontWeight.w400,
                   ),
@@ -60,14 +62,14 @@ class CustomEventCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Icon(Icons.alarm,size: 15,),
+                    Icon(Icons.alarm,size:screenWidth*15/360,),
                     SizedBox(width: 5,),
                     Text(
-                      'Start Time: 11:10am',
+                      'Start Time: ${DateFormat.jm().format(eventDate)}',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 11,
+                        fontSize: screenWidth*11/360,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w400,
                       ),
@@ -76,14 +78,14 @@ class CustomEventCard extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Icon(Icons.tv_rounded,size: 15,),
+                    Icon(Icons.tv_rounded,size:screenWidth*15/360,),
                     SizedBox(width: 5,),
                     Text(
                       'TV: $tvName',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 10,
+                        fontSize: screenWidth*10/360,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w400,
                       ),

@@ -233,32 +233,6 @@ class CustomRacingCardButton extends StatelessWidget {
                           },
                         ),
                       ),
-                      // Container(
-                      //   width: screenWidth*0.166,
-                      //   decoration: BoxDecoration(
-                      //     color: Color(0xFFF93939),
-                      //     borderRadius: BorderRadius.circular(4),
-                      //   ),
-                      //   child: Padding(
-                      //     padding: EdgeInsets.symmetric(
-                      //       horizontal: screenWidth * 0.01, // 1% of screen width
-                      //       vertical: screenHeight * 0.005, // 0.5% of screen height
-                      //     ),
-                      //     child: Center(
-                      //       child: Text(
-                      //         sponsorName,
-                      //         style: TextStyle(
-                      //           color: Colors.white,
-                      //           fontSize: sponsorNameFontSize,
-                      //           fontFamily: 'Inter',
-                      //           fontWeight: FontWeight.w400,
-                      //         ),
-                      //         maxLines: 1,
-                      //         overflow: TextOverflow.ellipsis,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
