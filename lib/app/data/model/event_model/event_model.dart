@@ -71,7 +71,7 @@ class EventTime {
     required this.minute,
   });
 
-  // টাইম ফরম্যাট করা স্ট্রিং (যেমন: "15:32")
+
   String get formattedTime {
     return '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
   }

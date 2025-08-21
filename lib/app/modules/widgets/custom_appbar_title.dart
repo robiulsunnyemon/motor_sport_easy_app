@@ -45,70 +45,70 @@ class CustomAppbarTitle extends StatelessWidget {
             ),
           ],
         ),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          spacing: 16,
-          children: [
-            Text(
-              'Sponsored by',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: ShapeDecoration(
-                color: const Color(0xFFF93939),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 4,
-                children: [
-                  Container(
-                    width: 16,
-                    height: 16,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                    ),
-                    child: Center(
-                      child: Container(
-                        width: 15,
-                        height: 15,
-                        decoration: ShapeDecoration(
-                          color: Colors.red,
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(width: 3, color: Colors.white),
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  Text(
-                    'DAVE REMAPS',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisSize: MainAxisSize.min,
+        //   mainAxisAlignment: MainAxisAlignment.start,
+        //   crossAxisAlignment: CrossAxisAlignment.center,
+        //   spacing: 16,
+        //   children: [
+        //     Text(
+        //       'Sponsored by',
+        //       style: TextStyle(
+        //         color: Colors.white,
+        //         fontSize: 10,
+        //         fontFamily: 'Inter',
+        //         fontWeight: FontWeight.w400,
+        //       ),
+        //     ),
+        //     Container(
+        //       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        //       decoration: ShapeDecoration(
+        //         color: const Color(0xFFF93939),
+        //         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        //       ),
+        //       child: Row(
+        //         mainAxisSize: MainAxisSize.min,
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         spacing: 4,
+        //         children: [
+        //           Container(
+        //             width: 16,
+        //             height: 16,
+        //             decoration: ShapeDecoration(
+        //               color: Colors.white,
+        //               shape: RoundedRectangleBorder(
+        //                 borderRadius: BorderRadius.circular(2),
+        //               ),
+        //             ),
+        //             child: Center(
+        //               child: Container(
+        //                 width: 15,
+        //                 height: 15,
+        //                 decoration: ShapeDecoration(
+        //                   color: Colors.red,
+        //                   shape: RoundedRectangleBorder(
+        //                     side: BorderSide(width: 3, color: Colors.white),
+        //                     borderRadius: BorderRadius.circular(50),
+        //                   ),
+        //                 ),
+        //               ),
+        //             ),
+        //           ),
+        //           Text(
+        //             'DAVE REMAPS',
+        //             style: TextStyle(
+        //               color: Colors.white,
+        //               fontSize: 10,
+        //               fontFamily: 'Inter',
+        //               fontWeight: FontWeight.w400,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:motor_sport_easy/app/modules/event_dashboard/widgets/event_dashboard_card.dart';
 import 'package:motor_sport_easy/app/modules/widgets/custom_elevated_button.dart';
-
 import '../../../routes/app_pages.dart';
 import '../controllers/event_dashboard_controller.dart';
 
@@ -11,6 +9,7 @@ class EventDashboardView extends GetView<EventDashboardController> {
   const EventDashboardView({super.key});
   @override
   Widget build(BuildContext context) {
+
     final mediaQuery = MediaQuery.of(context);
     final double screenWidth = mediaQuery.size.width;
 

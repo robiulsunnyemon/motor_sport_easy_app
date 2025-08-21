@@ -20,6 +20,7 @@ class SingleRaceEventDashboardController extends GetxController {
     try {
       isLoading(true);
       events.clear();
+      update();
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection('race')

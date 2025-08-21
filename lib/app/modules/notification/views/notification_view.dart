@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:motor_sport_easy/app/routes/app_pages.dart';
 import '../../widgets/custom_appbar_title.dart';
 import '../widgets/custom_notification_card.dart';
 import '../controllers/notification_controller.dart';
@@ -9,9 +8,14 @@ class NotificationView extends GetView<NotificationController> {
   const NotificationView({super.key});
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth=MediaQuery.of(context).size.width;
+    double screenHeight=MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar:AppBar(
-        toolbarHeight: 120,
+
+        toolbarHeight: screenHeight*120/752,
         title: CustomAppbarTitle(),
       ),
       body: CustomScrollView(
@@ -29,7 +33,7 @@ class NotificationView extends GetView<NotificationController> {
                     'Notifications',
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 24,
+                      fontSize: screenWidth*24/360,
                       fontFamily: 'Inter',
                       fontWeight: FontWeight.w500,
                     ),

@@ -57,7 +57,7 @@ class AppPages {
       binding: NotificationBinding(),
     ),
     GetPage(
-      name: _Paths.RACING_DETAILS,
+      name: "${_Paths.RACING_DETAILS}/:raceId/:raceName",
       page: () => const RacingDetailsView(),
       binding: RacingDetailsBinding(),
     ),

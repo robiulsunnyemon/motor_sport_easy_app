@@ -1,101 +1,83 @@
+
 import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../data/model/event_model/event_model.dart';
 import '../../../shared_pref_helper/shared_pref_helper.dart';
-import '../widgets/set_notification_alert_dialog.dart';
+
+
 
 class RacingDetailsController extends GetxController {
-  RxInt setHour = 1.obs;
+  final String raceId;
+  final String raceName;
+
+  RacingDetailsController({required this.raceId,required this.raceName});
+
+  final RxString _currentRaceId = ''.obs;
+  String get currentRaceId => _currentRaceId.value;
+  set currentRaceId(String value) => _currentRaceId.value = value;
+
   RxBool is8Hour = false.obs;
   RxBool is3Hour = false.obs;
   RxBool is6Hour = false.obs;
 
-  void increaseSetHour() {
-    setHour.value++;
-    update();
-  }
-
-  void decreaseSetHour() {
-    if (setHour.value > 1) {
-      setHour.value--;
-      update();
-    }
-  }
-
-  void set8Hour({
-    required String eventName,
-    required DateTime date,
-    required int hour,
-  }) {
-    if (is8Hour.value == false) {
-      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
-      is8Hour.value = true;
-    } else {
-      is8Hour.value = false;
-    }
-    update();
-  }
-
-  void set3Hour({
-    required String eventName,
-    required DateTime date,
-    required int hour,
-  }) {
-    if (is3Hour.value == false) {
-      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
-      is3Hour.value = true;
-    } else {
-      is3Hour.value = false;
-    }
-    update();
-  }
-
-  void set6Hour({
-    required String eventName,
-    required DateTime date,
-    required int hour,
-  }) {
-    if (is6Hour.value == false) {
-      sendNotificationToApi(eventName: eventName,date: date,hour: hour);
-      is6Hour.value = true;
-    } else {
-      is6Hour.value = false;
-    }
-    update();
-  }
-
-  Future<void> showMyDialog({
-    required BuildContext context,
-    required String eventId,
-    required String eventName,
-    required DateTime eventDate,
-    required int hour,
-  }) async {
-    return showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return SetNotificationAlertDialog(
-          eventId: eventId,
-          raceId: '',
-          eventName: eventName,
-          eventDate: eventDate,
-          hour: hour,
-        );
-      },
-    );
-  }
-
   final events = <EventModel>[].obs;
   final isLoading = false.obs;
+
+
+  Future<void> _loadNotificationState() async {
+    final state = await SharedPrefHelper.getNotificationState(currentRaceId);
+    is8Hour.value = state['8hour'] ?? false;
+    is3Hour.value = state['3hour'] ?? false;
+    is6Hour.value = state['6hour'] ?? false;
+  }
+
+
+  Future<void> _saveNotificationState() async {
+    final state = {
+      '8hour': is8Hour.value,
+      '3hour': is3Hour.value,
+      '6hour': is6Hour.value,
+    };
+    await SharedPrefHelper.saveNotificationState(currentRaceId, state);
+  }
+
+  void set8Hour() {
+    is8Hour.value = !is8Hour.value;
+    _saveNotificationState();
+
+    if (is8Hour.value) {
+      checkEventData(hour: 8);
+    }
+  }
+
+  void set3Hour() {
+    is3Hour.value = !is3Hour.value;
+    _saveNotificationState();
+
+    if (is3Hour.value) {
+      checkEventData(hour: 3);
+    }
+  }
+
+  void set6Hour() {
+    is6Hour.value = !is6Hour.value;
+    _saveNotificationState();
+
+    if (is6Hour.value) {
+      checkEventData(hour: 6);
+    }
+  }
 
   Future<void> getEventsByRaceId(String raceId) async {
     try {
       isLoading(true);
       events.clear();
+      currentRaceId = raceId;
+
+      // Notification state লোড করুন
+      await _loadNotificationState();
 
       final querySnapshot = await FirebaseFirestore.instance
           .collection('race')
@@ -115,25 +97,24 @@ class RacingDetailsController extends GetxController {
   }
 
   Future<void> sendNotificationToApi({
-    required String eventName,
+    required String location,
     required DateTime date,
     required int hour,
   }) async {
-    const String apiUrl =
-        "https://motogp.mtscorporate.com/api/users/schedule-notification";
+    const String apiUrl = "https://motogp.mtscorporate.com/api/users/schedule-notification";
     String? uid = await SharedPrefHelper.getUid();
+
     if (uid != null) {
       String formattedEventDate = date.toUtc().toIso8601String();
 
       Map<String, dynamic> requestBody = {
         "uid": uid,
         "gameDetails": {
-          "gameName": eventName,
+          "gameName": location,
           "gameTime": formattedEventDate,
         },
         "hoursBefore": hour,
       };
-      print(hour);
 
       try {
         final response = await http.post(
@@ -143,18 +124,41 @@ class RacingDetailsController extends GetxController {
         );
 
         if (response.statusCode == 200) {
-          print("Event notification set successfully");
-          Get.back();
-          Get.snackbar("Success", "Event notification set successfully");
+          print("Notification set successfully for $location");
         } else {
-          print("Failed to set notification: ${response.body}");
-          Get.snackbar("Error", "Failed to set notification");
+          print("Failed to set notification. Status: ${response.statusCode}");
         }
       } catch (e) {
-        print("Error sending token to backend: $e");
-        Get.snackbar("Error", "Failed to set notification");
+        print("Error sending notification: $e");
       }
     }
   }
 
+  void checkEventData({required int hour}) {
+    for(var event in events) {
+      sendNotificationToApi(
+          location: event.location,
+          date: event.fullDateTime,
+          hour: hour
+      );
+    }
+  }
+
+
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    getEventsByRaceId(raceId);
+    super.onInit();
+  }
+
+
+
+
 }
+
+
+
+
+

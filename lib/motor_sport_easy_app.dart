@@ -9,6 +9,9 @@ class MotorSportEasyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double screenWidth=MediaQuery.of(context).size.width;
+
     return  GetMaterialApp(
       title: "MotorSportEasy",
       initialRoute: initialRoute,
@@ -41,6 +44,15 @@ class MotorSportEasyApp extends StatelessWidget {
             labelStyle: TextStyle(
               fontFamily: 'Inter'
           )
+          ),
+          textTheme: TextTheme(
+            headlineMedium: TextStyle(
+              color: Colors.black,
+              fontSize: screenWidth*18/360,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w500,
+            ),
+
           )
       ),
       defaultTransition: Transition.fadeIn,

@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:motor_sport_easy/app/routes/app_pages.dart';
-import '../../racing_details/controllers/racing_details_controller.dart';
 import '../../widgets/custom_appbar_title.dart';
 import '../controllers/home_controller.dart';
 import '../widgets/custom_racing_card_button.dart';
 
 class HomeView extends GetView<HomeController> {
-   HomeView({super.key});
-  final _raceDetailsController =Get.put(RacingDetailsController());
+  const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(toolbarHeight: screenHeight*120/752, title: CustomAppbarTitle()),
+      appBar: AppBar(
+        toolbarHeight: screenHeight * 120 / 752,
+        title: CustomAppbarTitle(),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
@@ -25,12 +27,12 @@ class HomeView extends GetView<HomeController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: screenWidth*.556,
+                    width: screenWidth * .556,
                     child: Text(
                       'Select racing series',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: screenWidth*24/360,
+                        fontSize: screenWidth * 24 / 360,
                         fontFamily: 'Inter',
                         fontWeight: FontWeight.w500,
                       ),
@@ -76,30 +78,32 @@ class HomeView extends GetView<HomeController> {
             ),
           ),
           Obx(() {
-            if(controller.raceList.isEmpty){
+            if (controller.raceList.isEmpty) {
               return SliverToBoxAdapter(
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
+                child: Center(child: CircularProgressIndicator()),
               );
-            }else{
+            } else {
               return SliverList.builder(
-                  itemCount: controller.raceList.length,
-                  itemBuilder: (context, index) {
-                    final race = controller.raceList[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4,horizontal: 7),
-                      child: CustomRacingCardButton(
-                        racingName: race.title,
-                        sponsorLogo: race.logoUrl,
-                        onTap: (){
-                          Get.toNamed(Routes.RACING_DETAILS);
-                          _raceDetailsController.getEventsByRaceId(controller.raceList[index].id);
-                        },
-                      ),
-                    );
-
-                  }
+                itemCount: controller.raceList.length,
+                itemBuilder: (context, index) {
+                  final race = controller.raceList[index];
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 7,
+                    ),
+                    child: CustomRacingCardButton(
+                      racingName: race.title,
+                      sponsorLogo: race.logoUrl,
+                      onTap: () {
+                        final String encodedData = Uri.encodeComponent(race.title);
+                        Get.toNamed(
+                          "${Routes.RACING_DETAILS}/${race.id}/$encodedData",
+                        );
+                      },
+                    ),
+                  );
+                },
               );
             }
           }),
