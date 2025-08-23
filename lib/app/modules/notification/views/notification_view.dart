@@ -42,18 +42,28 @@ class NotificationView extends GetView<NotificationController> {
               ),
             ),
           ),
-          SliverList.builder(
-            itemCount: 6,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomNotificationCard(
-                  notificationTitle: 'Your Austria race starting soon',
-                  notificationDateTime: DateTime.now(),
-                ),
-              );
-            },
-          )
+         Obx((){
+           if (controller.notifications.isEmpty) {
+             return SliverToBoxAdapter(
+               child: Center(
+                 child: Text('No notifications available.'),
+               ),
+             );
+           }else{
+            return SliverList.builder(
+               itemCount: controller.notifications.length,
+               itemBuilder: (context, index) {
+                 return Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: CustomNotificationCard(
+                     notificationTitle: controller.notifications[index].title,
+                     notificationDateTime: controller.notifications[index].createdAt ??DateTime.now(),
+                   ),
+                 );
+               },
+             );
+           }
+         })
 
         ],
       ),

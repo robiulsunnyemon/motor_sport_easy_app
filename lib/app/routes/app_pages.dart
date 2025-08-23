@@ -20,6 +20,8 @@ import '../modules/login_dashboard/bindings/login_dashboard_binding.dart';
 import '../modules/login_dashboard/views/login_dashboard_view.dart';
 import '../modules/notification/bindings/notification_binding.dart';
 import '../modules/notification/views/notification_view.dart';
+import '../modules/notify_dashboard/bindings/notify_dashboard_binding.dart';
+import '../modules/notify_dashboard/views/notify_dashboard_view.dart';
 import '../modules/race_admin/bindings/race_admin_binding.dart';
 import '../modules/race_admin/views/race_admin_view.dart';
 import '../modules/racing_details/bindings/racing_details_binding.dart';
@@ -134,6 +136,11 @@ class AppPages {
       name: _Paths.LOGIN_DASHBOARD,
       page: () => const LoginDashboardView(),
       binding: LoginDashboardBinding(),
+    ),
+    GetPage(
+      name: _Paths.NOTIFY_DASHBOARD,
+      page: () => const NotifyDashboardView(),
+      binding: NotifyDashboardBinding(),
     ),
   ];
 }

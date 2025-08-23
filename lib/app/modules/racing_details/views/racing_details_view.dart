@@ -88,7 +88,7 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '8 Hour before race',
+                                  '12 Hour before race',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -98,48 +98,10 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                                   ),
                                 ),
                                 Switch(
-                                  value: controller.is8Hour.value,
+                                  value: controller.is12Hour.value,
                                   activeColor: Colors.red,
                                   onChanged: (value) {
-                                    controller.set8Hour();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Container(
-                            width: double.infinity,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 4,
-                            ),
-                            decoration: ShapeDecoration(
-                              color: const Color(0xFFF3F4F6),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '6 Hour before race',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontFamily: 'Inter',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Switch(
-                                  value: controller.is6Hour.value,
-                                  activeColor: Colors.red,
-                                  onChanged: (value) {
-                                    controller.set6Hour();
+                                    controller.set12Hour();
                                   },
                                 ),
                               ],
@@ -178,6 +140,44 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                                   activeColor: Colors.red,
                                   onChanged: (value) {
                                     controller.set3Hour();
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Container(
+                            width: double.infinity,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: ShapeDecoration(
+                              color: const Color(0xFFF3F4F6),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '1 Hour before race',
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Switch(
+                                  value: controller.is1Hour.value,
+                                  activeColor: Colors.red,
+                                  onChanged: (value) {
+                                    controller.set1Hour();
                                   },
                                 ),
                               ],

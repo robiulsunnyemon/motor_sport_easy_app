@@ -18,9 +18,9 @@ class RacingDetailsController extends GetxController {
   String get currentRaceId => _currentRaceId.value;
   set currentRaceId(String value) => _currentRaceId.value = value;
 
-  RxBool is8Hour = false.obs;
+  RxBool is12Hour = false.obs;
   RxBool is3Hour = false.obs;
-  RxBool is6Hour = false.obs;
+  RxBool is1Hour = false.obs;
 
   final events = <EventModel>[].obs;
   final isLoading = false.obs;
@@ -28,27 +28,27 @@ class RacingDetailsController extends GetxController {
 
   Future<void> _loadNotificationState() async {
     final state = await SharedPrefHelper.getNotificationState(currentRaceId);
-    is8Hour.value = state['8hour'] ?? false;
+    is12Hour.value = state['8hour'] ?? false;
     is3Hour.value = state['3hour'] ?? false;
-    is6Hour.value = state['6hour'] ?? false;
+    is1Hour.value = state['6hour'] ?? false;
   }
 
 
   Future<void> _saveNotificationState() async {
     final state = {
-      '8hour': is8Hour.value,
+      '12hour': is12Hour.value,
       '3hour': is3Hour.value,
-      '6hour': is6Hour.value,
+      '6hour': is1Hour.value,
     };
     await SharedPrefHelper.saveNotificationState(currentRaceId, state);
   }
 
-  void set8Hour() {
-    is8Hour.value = !is8Hour.value;
+  void set12Hour() {
+    is12Hour.value = !is12Hour.value;
     _saveNotificationState();
 
-    if (is8Hour.value) {
-      checkEventData(hour: 8);
+    if (is12Hour.value) {
+      checkEventData(hour: 12);
     }
   }
 
@@ -61,12 +61,12 @@ class RacingDetailsController extends GetxController {
     }
   }
 
-  void set6Hour() {
-    is6Hour.value = !is6Hour.value;
+  void set1Hour() {
+    is1Hour.value = !is1Hour.value;
     _saveNotificationState();
 
-    if (is6Hour.value) {
-      checkEventData(hour: 6);
+    if (is1Hour.value) {
+      checkEventData(hour: 1);
     }
   }
 
@@ -103,7 +103,7 @@ class RacingDetailsController extends GetxController {
   }) async {
     const String apiUrl = "https://motogp.mtscorporate.com/api/users/schedule-notification";
     String? uid = await SharedPrefHelper.getUid();
-
+    print(hour);
     if (uid != null) {
       String formattedEventDate = date.toUtc().toIso8601String();
 

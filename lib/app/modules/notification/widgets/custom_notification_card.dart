@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CustomNotificationCard extends StatelessWidget {
   final String notificationTitle;
@@ -34,7 +35,7 @@ class CustomNotificationCard extends StatelessWidget {
           SizedBox(
             width: 329,
             child: Text(
-              'Time: 05:10am',
+              'Time: ${DateFormat('hh:mm a').format(notificationDateTime)}',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 12,
