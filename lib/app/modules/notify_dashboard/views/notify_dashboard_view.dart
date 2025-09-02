@@ -207,7 +207,8 @@ class NotifyDashboardView extends GetView<NotifyDashboardController> {
                 SizedBox(height: 24),
                 CustomElevatedButton(
                   onTap: () {
-                      controller.createRace(context: context);
+                      //controller.createRace(context: context);
+                      controller.createNotification();
                   },
                   level: "Send",
                 ),

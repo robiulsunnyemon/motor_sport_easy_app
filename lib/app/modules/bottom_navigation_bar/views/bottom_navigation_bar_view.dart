@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:motor_sport_easy/app/shared_pref_helper/shared_pref_helper.dart';
 
 import '../controllers/bottom_navigation_bar_controller.dart';
 
@@ -8,6 +9,7 @@ class BottomNavigationBarView extends GetView<BottomNavigationBarController> {
   const BottomNavigationBarView({super.key});
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Obx(() => controller.pages[controller.currentIndex.value]),
       bottomNavigationBar: Obx(

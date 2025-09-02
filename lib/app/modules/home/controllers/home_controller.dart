@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../data/model/race_model/race_model.dart';
+import '../../../routes/app_pages.dart';
 import '../../../shared_pref_helper/shared_pref_helper.dart';
 import '../../widgets/custom_elevated_button.dart';
 
@@ -214,6 +215,11 @@ class HomeController extends GetxController {
     } catch (e) {
       Get.snackbar('Error', 'Failed to submit request: ${e.toString()}');
     }
+  }
+
+  void signOut(){
+    SharedPrefHelper.clearUid();
+    Get.offAllNamed(Routes.LOGIN);
   }
 
   @override

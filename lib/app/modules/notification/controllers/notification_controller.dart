@@ -1,34 +1,60 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
+import '../../../data/model/notification/notification_model.dart';
 import '../../../data/model/notification_model/notification_model.dart';
+import '../../../shared_pref_helper/shared_pref_helper.dart';
 
 class NotificationController extends GetxController {
 
-  final RxList<NotificationModel> notifications = <NotificationModel>[].obs;
+  final RxList<Notification> notifications = <Notification>[].obs;
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
+  var notificationResponse = Rxn<NotificationResponse>();
 
-  Future<void> fetchNotifications() async {
+
+  Future<NotificationResponse> getUserNotifications(String userId) async {
     try {
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('notify')
-          .orderBy('createdAt', descending: true)
-          .get();
+      isLoading.value = true;
+      final response = await http.get(
+        Uri.parse('https://motogp.mtscorporate.com/api/notifications/$userId'),
+        headers: {'Content-Type': 'application/json'},
+      );
 
-      final List<NotificationModel> fetchedNotifications = querySnapshot.docs
-          .map((doc) => NotificationModel.fromSnapshot(doc))
-          .toList();
+      print("update notification");
+      print(response.statusCode);
+      print(response.body);
+      isLoading.value = false;
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        notificationResponse.value = NotificationResponse.fromJson(data);
+        return NotificationResponse.fromJson(data);
 
-      notifications.assignAll(fetchedNotifications);
+      } else {
+        throw Exception('Failed to load notifications: ${response.statusCode}');
+      }
     } catch (e) {
-      Get.snackbar('Error', 'Failed to fetch notifications: $e');
+      errorMessage.value =e.toString();
+      throw Exception('Failed to load notifications: $e');
     }
   }
 
+
+
   @override
-  void onInit() {
+  Future<void> onInit() async {
     // TODO: implement onInit
-    fetchNotifications();
+    final uid= await SharedPrefHelper.getUid();
+    getUserNotifications(uid??"");
     super.onInit();
+  }
+
+
+  Future<void> freshNotifications()async{
+    final uid= await SharedPrefHelper.getUid();
+    getUserNotifications(uid??"");
   }
 
 }

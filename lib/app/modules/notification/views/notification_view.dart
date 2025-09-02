@@ -6,66 +6,64 @@ import '../controllers/notification_controller.dart';
 
 class NotificationView extends GetView<NotificationController> {
   const NotificationView({super.key});
+
   @override
   Widget build(BuildContext context) {
-
-    double screenWidth=MediaQuery.of(context).size.width;
-    double screenHeight=MediaQuery.of(context).size.height;
-
     return Scaffold(
-      appBar:AppBar(
+      appBar: AppBar(toolbarHeight: 120, title: const CustomAppbarTitle()),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await controller.freshNotifications();
+        },
+        child: Obx(() {
+          if (controller.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-        toolbarHeight: screenHeight*120/752,
-        title: CustomAppbarTitle(),
-      ),
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 8,
-                children: [
-                  Text(
-                    'Notifications',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: screenWidth*24/360,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
+          if (controller.errorMessage.isNotEmpty) {
+            return Center(child: Text('Error: ${controller.errorMessage.value}'));
+          }
+
+          final response = controller.notificationResponse.value;
+          if (response == null || response.notifications.isEmpty) {
+            return const Center(child: Text('You have no notifications'));
+          }
+
+          return ListView.builder(
+            padding: const EdgeInsets.all(8.0),
+            itemCount: response.notifications.length,
+            itemBuilder: (context, index) {
+              final notification = response.notifications[index];
+
+              if (!notification.sent) return const SizedBox.shrink();
+
+
+              if(notification.type=="admin_broadcast"){
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomNotificationCard(
+                    notificationTitle: notification.title ??" ",
+                    notificationBody: notification.message ??" ",
+                    // notificationDateTime:notification.timestamp ?? notification.notificationTime,
                   ),
-                ],
-              ),
-            ),
-          ),
-         Obx((){
-           if (controller.notifications.isEmpty) {
-             return SliverToBoxAdapter(
-               child: Center(
-                 child: Text('No notifications available.'),
-               ),
-             );
-           }else{
-            return SliverList.builder(
-               itemCount: controller.notifications.length,
-               itemBuilder: (context, index) {
-                 return Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: CustomNotificationCard(
-                     notificationTitle: controller.notifications[index].title,
-                     notificationDateTime: controller.notifications[index].createdAt ??DateTime.now(),
-                   ),
-                 );
-               },
-             );
-           }
-         })
+                );
+              }else{
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: CustomNotificationCard(
+                    notificationTitle: notification.notificationMessage?.notification.title ??"",
+                    notificationBody: notification.notificationMessage?.notification.body ??" ",
+                    // notificationDateTime: notification.data!.timestamp != null
+                    //     ? DateTime.parse(notification.data!.timestamp!)
+                    //     : DateTime.now(),
+                  ),
+                );
+              }
 
-        ],
+
+            },
+          );
+        }),
       ),
     );
   }

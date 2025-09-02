@@ -4,14 +4,13 @@ import 'package:motor_sport_easy/app/modules/widgets/custom_elevated_button.dart
 import '../../../routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 import '../widgets/forget_password_dialog.dart';
-import '../widgets/social_login_button.dart';
 
 class LoginView extends GetView<LoginController> {
-  const LoginView({super.key});
-
+   LoginView({super.key});
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    final formKey = GlobalKey<FormState>();
+
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -120,36 +119,6 @@ class LoginView extends GetView<LoginController> {
                   ],
                 ),
 
-                // 🔹 OR Divider
-                const SizedBox(height: 24),
-                Row(
-                  children: const [
-                    Expanded(child: Divider(thickness: 1)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8.0),
-                      child: Text("OR"),
-                    ),
-                    Expanded(child: Divider(thickness: 1)),
-                  ],
-                ),
-                const SizedBox(height: 24),
-
-                // 🔹 Social Login Buttons
-                SocialLoginButton(
-                  icon: Icons.g_mobiledata_sharp,
-                  text: "Continue with Google",
-                  onTap: () {
-                    Get.snackbar("Google Login", "Not implemented yet");
-                  },
-                ),
-                const SizedBox(height: 12),
-                SocialLoginButton(
-                  icon: Icons.facebook,
-                  text: "Continue with Facebook",
-                  onTap: () {
-                    Get.snackbar("Facebook Login", "Not implemented yet");
-                  },
-                ),
               ],
             ),
           ),

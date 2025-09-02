@@ -3,8 +3,9 @@ import 'package:intl/intl.dart';
 
 class CustomNotificationCard extends StatelessWidget {
   final String notificationTitle;
-  final DateTime notificationDateTime;
-  const CustomNotificationCard({super.key, required this.notificationTitle, required this.notificationDateTime});
+  final String notificationBody;
+   final DateTime? notificationDateTime;
+  const CustomNotificationCard({super.key, required this.notificationTitle, this.notificationDateTime, required this.notificationBody});
 
   @override
   Widget build(BuildContext context) {
@@ -28,24 +29,39 @@ class CustomNotificationCard extends StatelessWidget {
                 fontFamily: 'Inter',
                 fontWeight: FontWeight.w500,
               ),
-              maxLines: 1,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           SizedBox(
             width: 329,
             child: Text(
-              'Time: ${DateFormat('hh:mm a').format(notificationDateTime)}',
+              notificationBody,
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 12,
+                fontSize: 13,
                 fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
               ),
-              maxLines: 1,
+              maxLines: 5,
               overflow: TextOverflow.ellipsis,
             ),
           ),
+          // if(notificationDateTime.toString().isNotEmpty)
+          //   SizedBox(
+          //   width: 329,
+          //   child: Text(
+          //     'Time: ${DateFormat('hh:mm a').format(notificationDateTime!)}',
+          //     style: TextStyle(
+          //       color: Colors.black,
+          //       fontSize: 12,
+          //       fontFamily: 'Inter',
+          //       fontWeight: FontWeight.w400,
+          //     ),
+          //     maxLines: 1,
+          //     overflow: TextOverflow.ellipsis,
+          //   ),
+          // ),
         ],
       ),
     );

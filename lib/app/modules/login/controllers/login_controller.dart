@@ -9,8 +9,8 @@ import 'dart:convert';
 
 
 class LoginController extends GetxController {
-  final emailController = TextEditingController(text: "heahimu@gmail.com");
-  final passwordController = TextEditingController(text: "123456");
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
 
@@ -89,10 +89,4 @@ class LoginController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.onClose();
-  }
 }
