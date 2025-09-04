@@ -110,7 +110,7 @@ class RacingDetailsController extends GetxController {
       Map<String, dynamic> requestBody = {
         "uid": uid,
         "gameDetails": {
-          "gameName": location,
+          "gameName": "$raceName at $location",
           "gameTime": formattedEventDate,
         },
         "hoursBefore": hour,
