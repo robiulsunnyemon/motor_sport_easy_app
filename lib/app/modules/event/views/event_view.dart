@@ -50,15 +50,15 @@ class EventView extends GetView<EventController> {
                 itemCount: controller.allEvents.length,
                 itemBuilder: (context, index) {
                   final eventData = controller.allEvents[index];
-                  final fullDateTime = (eventData['fullDateTime'] as Timestamp).toDate();
+
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(
                       onTap: () {},
                       child: CustomEventCard(
-                        eventDate: fullDateTime,
-                        eventLocation:eventData["location"],
-                        tvName: eventData["title"],
+                        eventDate: eventData.createdAt,
+                        eventLocation:eventData.location,
+                        tvName: eventData.tvBroadcastChanel,
                       ),
                     ),
                   );

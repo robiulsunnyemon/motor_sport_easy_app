@@ -24,11 +24,10 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Row(
+              child:Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 8,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -36,8 +35,9 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                     },
                     child: Icon(Icons.arrow_back),
                   ),
+                  SizedBox(width: 8), // 👈 instead of spacing
                   SizedBox(
-                    width: screenWidth*300/360,
+                    width: screenWidth * 300 / 360,
                     child: Text(
                       controller.raceName,
                       style: TextStyle(
@@ -50,7 +50,8 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                     ),
                   ),
                 ],
-              ),
+              )
+
             ),
           ),
           SliverToBoxAdapter(
@@ -210,28 +211,26 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
                   ),
                 ),
               );
-            } else if (controller.events.isEmpty) {
+            } else if (controller.selectedRace.value == null || controller.selectedRace.value!.events.isEmpty) {
               return SliverToBoxAdapter(
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 100),
-                    child: Text("No events available"),
-                  ),
-                ),
+                child: Center(child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 50.0),
+                  child: Text("No events available"),
+                )),
               );
             } else {
               return SliverList(
                 delegate: SliverChildBuilderDelegate((context, index) {
-                  final event = controller.events[index];
+                  final event = controller.selectedRace.value!.events[index];
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomEventCard(
-                      eventDate: event.fullDateTime,
+                      eventDate: event.createdAt,
                       eventLocation: event.location,
-                      tvName: event.broadcastChannel,
+                      tvName: event.tvBroadcastChanel,
                     ),
                   );
-                }, childCount: controller.events.length),
+                }, childCount: controller.selectedRace.value?.events.length),
               );
             }
           }),
@@ -240,3 +239,4 @@ class RacingDetailsView extends GetView<RacingDetailsController> {
     );
   }
 }
+

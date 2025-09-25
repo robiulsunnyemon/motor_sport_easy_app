@@ -20,7 +20,7 @@ class RacingDetailsBinding extends Bindings {
     }
     Get.lazyPut<RacingDetailsController>(
       () => RacingDetailsController(
-        raceId: raceId,
+        raceId: int.parse(raceId),
         raceName: raceName,
       ),
     );

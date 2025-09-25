@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../api_services/race_api_services/race_api_services.dart';
+import '../../../data/api_model/race_api_model.dart';
 import '../../../data/model/race_model/race_model.dart';
 import '../../../routes/app_pages.dart';
 import '../../../shared_pref_helper/shared_pref_helper.dart';
@@ -163,24 +165,59 @@ class HomeController extends GetxController {
   final RxList<RaceModel> raceList = <RaceModel>[].obs;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+
+
+
+  var allRacesList = <RaceAPIModel>[].obs;
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
+
+
   @override
   void onInit() {
-    fetchRaces();
+    fetchAllRaces();
     super.onInit();
   }
 
-  Future<void> fetchRaces() async {
-    try {
-      _firestore.collection('race').snapshots().listen((QuerySnapshot snapshot) {
-        raceList.assignAll(
-          snapshot.docs.map((doc) => RaceModel.fromFirestore(doc)).toList(),
-        );
 
-      });
+
+  Future<void> fetchAllRaces() async {
+    try {
+      isLoading.value = true;
+      errorMessage.value = '';
+
+      final racesList = await RaceApiService.getAllRaces();
+      allRacesList.value = racesList;
+
     } catch (e) {
-      Get.snackbar('Error', 'Failed to fetch races: $e');
+      errorMessage.value = 'Failed to load races: $e';
+      Get.snackbar(
+        'Error',
+        'Failed to load races',
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    } finally {
+      isLoading.value = false;
     }
   }
+
+
+
+
+  // Future<void> fetchRaces() async {
+  //   try {
+  //     _firestore.collection('race').snapshots().listen((QuerySnapshot snapshot) {
+  //       raceList.assignAll(
+  //         snapshot.docs.map((doc) => RaceModel.fromFirestore(doc)).toList(),
+  //       );
+  //
+  //     });
+  //   } catch (e) {
+  //     Get.snackbar('Error', 'Failed to fetch races: $e');
+  //   }
+  // }
 
 
   Future<void> submitRaceRequest(String raceName) async {
@@ -227,5 +264,10 @@ class HomeController extends GetxController {
     raceList.clear();
     super.onClose();
   }
+
+
+
+
+
 }
 
