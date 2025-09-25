@@ -28,15 +28,14 @@ class LoginController extends GetxController {
 
       if (uid != null) {
         // Get FCM token and send to backend
-        await _getAndSendFCMToken(email);
-        Get.offAllNamed(Routes.BOTTOM_NAVIGATION_BAR);
+        await _getAndSendFCMToken(email,uid);
       }
     } catch (e) {
       Get.snackbar("Login Failed", e.toString());
     }
   }
 
-  Future<void> _getAndSendFCMToken(String email) async {
+  Future<void> _getAndSendFCMToken(String email,String uid) async {
     try {
       // Request notification permissions (important for iOS)
       await _firebaseMessaging.requestPermission(
@@ -55,8 +54,8 @@ class LoginController extends GetxController {
 
       print("FCM Token: $token");
 
-      // Send token to your backend API
-      await _sendTokenToBackend(token, email);
+
+      await _sendFCMTokenToFastAPI(token, uid);
     } catch (e) {
       print("Error in FCM token handling: $e");
     }
@@ -88,5 +87,45 @@ class LoginController extends GetxController {
       print("Error sending token to backend: $e");
     }
   }
+
+
+
+
+
+  Future<void> _sendFCMTokenToFastAPI(String token, String uid) async {
+    const String apiUrl = "https://motorgp-render.onrender.com/user/registration";
+    print("fcm token: $token");
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "uid": uid,
+          "fcmToken": token
+        }),
+      );
+
+      print(response.statusCode);
+      print(response.body);
+
+      if (response.statusCode == 201) {
+        print("FCM Token successfully sent to backend!");
+        Get.snackbar("Login Success", "FCM Token successfully sent to backend!");
+        final decodedResponse=jsonDecode(response.body);
+        print("decoded token: ${decodedResponse["access_token"]}");
+        await SharedPrefHelper.saveToken(decodedResponse["access_token"]);
+        Get.offAllNamed(Routes.BOTTOM_NAVIGATION_BAR);
+
+      } else {
+        Get.snackbar("Login Failed", "Failed to send token: ${response.body}");
+        print("Failed to send token: ${response.body}");
+      }
+    } catch (e) {
+      Get.snackbar("Login Failed", "Error sending token to backend: $e");
+      print("Error sending token to backend: $e");
+    }
+  }
+
+
 
 }

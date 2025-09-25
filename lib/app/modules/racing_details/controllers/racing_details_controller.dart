@@ -1,22 +1,20 @@
-
 import 'dart:convert';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:motor_sport_easy/app/api_services/contants.dart';
+import '../../../api_services/race_api_services/race_api_services.dart';
+import '../../../data/api_model/race_api_model.dart';
 import '../../../data/model/event_model/event_model.dart';
 import '../../../shared_pref_helper/shared_pref_helper.dart';
 
 
-
 class RacingDetailsController extends GetxController {
-  final String raceId;
+  final int raceId;
   final String raceName;
 
-  RacingDetailsController({required this.raceId,required this.raceName});
+  RacingDetailsController({required this.raceId, required this.raceName});
 
-  final RxString _currentRaceId = ''.obs;
-  String get currentRaceId => _currentRaceId.value;
-  set currentRaceId(String value) => _currentRaceId.value = value;
+
 
   RxBool is12Hour = false.obs;
   RxBool is3Hour = false.obs;
@@ -25,140 +23,146 @@ class RacingDetailsController extends GetxController {
   final events = <EventModel>[].obs;
   final isLoading = false.obs;
 
-
   Future<void> _loadNotificationState() async {
-    final state = await SharedPrefHelper.getNotificationState(currentRaceId);
-    is12Hour.value = state['8hour'] ?? false;
-    is3Hour.value = state['3hour'] ?? false;
-    is1Hour.value = state['6hour'] ?? false;
+    is3Hour.value= await SharedPrefHelper.getNotification(raceId: raceId, hour: 3);
+    is1Hour.value= await SharedPrefHelper.getNotification(raceId: raceId, hour: 1);
+    is12Hour.value= await SharedPrefHelper.getNotification(raceId: raceId, hour: 12);
+    update();
+
   }
 
 
-  Future<void> _saveNotificationState() async {
-    final state = {
-      '12hour': is12Hour.value,
-      '3hour': is3Hour.value,
-      '6hour': is1Hour.value,
-    };
-    await SharedPrefHelper.saveNotificationState(currentRaceId, state);
-  }
-
-  void set12Hour() {
+  Future<void> set12Hour() async {
     is12Hour.value = !is12Hour.value;
-    _saveNotificationState();
+
 
     if (is12Hour.value) {
-      checkEventData(hour: 12);
+      await SharedPrefHelper.saveNotification(raceId: raceId,hour:12 );
+      sendNotificationFastAPI(
+        hour: 12,
+      );
+    }else{
+      await SharedPrefHelper.clearNotification(raceId: raceId, hour: 12);
+      await deletedNotification(hour: 12);
     }
   }
 
-  void set3Hour() {
+  Future<void> set3Hour() async {
     is3Hour.value = !is3Hour.value;
-    _saveNotificationState();
 
     if (is3Hour.value) {
-      checkEventData(hour: 3);
+      await SharedPrefHelper.saveNotification(raceId: raceId,hour:3 );
+      await sendNotificationFastAPI(
+        hour: 3,
+      );
+    }else{
+      await SharedPrefHelper.clearNotification(raceId: raceId, hour: 3);
+      deletedNotification(hour: 3);
     }
   }
 
-  void set1Hour() {
+  Future<void> set1Hour() async {
     is1Hour.value = !is1Hour.value;
-    _saveNotificationState();
 
     if (is1Hour.value) {
-      checkEventData(hour: 1);
-    }
-  }
-
-  Future<void> getEventsByRaceId(String raceId) async {
-    try {
-      isLoading(true);
-      events.clear();
-      currentRaceId = raceId;
-
-      // Notification state লোড করুন
-      await _loadNotificationState();
-
-      final querySnapshot = await FirebaseFirestore.instance
-          .collection('race')
-          .doc(raceId)
-          .collection('events')
-          .orderBy('createdAt', descending: true)
-          .get();
-
-      events.assignAll(
-        querySnapshot.docs.map((doc) => EventModel.fromFirestore(doc)).toList(),
+      await SharedPrefHelper.saveNotification(raceId: raceId,hour:1 );
+      sendNotificationFastAPI(
+        hour: 1,
       );
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to load events: $e');
-    } finally {
-      isLoading(false);
+    }else{
+      await SharedPrefHelper.clearNotification(raceId: raceId, hour: 1);
+      await deletedNotification(hour: 1);
     }
   }
 
-  Future<void> sendNotificationToApi({
-    required String location,
-    required DateTime date,
+
+  var selectedRace = Rx<RaceAPIModel?>(null);
+  Future<void> fetchRaceById(int id) async {
+    try {
+      isLoading.value = true;
+      await _loadNotificationState();
+      final race = await RaceApiService.getRaceById(id);
+      selectedRace.value = race;
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Failed to load race details',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    fetchRaceById(raceId);
+    super.onInit();
+  }
+
+  Future<void> sendNotificationFastAPI({
     required int hour,
   }) async {
-    const String apiUrl = "https://motogp.mtscorporate.com/api/users/schedule-notification";
-    String? uid = await SharedPrefHelper.getUid();
-    print(hour);
-    if (uid != null) {
-      String formattedEventDate = date.toUtc().toIso8601String();
-
-      Map<String, dynamic> requestBody = {
-        "uid": uid,
-        "gameDetails": {
-          "gameName": "$raceName at $location",
-          "gameTime": formattedEventDate,
-        },
-        "hoursBefore": hour,
-      };
-
+    final String apiUrl =
+        "$baseUrl/notifications/";
+    String? fastAPIToken = await SharedPrefHelper.getToken();
+    print("fastApIToke: $fastAPIToken");
+    if (fastAPIToken != null) {
       try {
         final response = await http.post(
           Uri.parse(apiUrl),
-          headers: {'Content-Type': 'application/json'},
-          body: jsonEncode(requestBody),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $fastAPIToken',
+          },
+          body: jsonEncode({
+            "race_id": raceId,
+            "notification_hour": hour
+          }),
         );
 
-        if (response.statusCode == 200) {
-          print("Notification set successfully for $location");
+        if (response.statusCode == 201) {
+          Get.snackbar("Notification Set", "Notification set successfully");
         } else {
+          Get.snackbar("Notification Failed",
+              "Failed to set notification. Status: ${response.statusCode}");
           print("Failed to set notification. Status: ${response.statusCode}");
         }
       } catch (e) {
+        Get.snackbar("Notification Failed", "Error sending notification: $e");
         print("Error sending notification: $e");
       }
     }
   }
 
-  void checkEventData({required int hour}) {
-    for(var event in events) {
-      sendNotificationToApi(
-          location: event.location,
-          date: event.fullDateTime,
-          hour: hour
-      );
+
+
+  Future<void> deletedNotification({required int hour}) async {
+    String? fastAPIToken = await SharedPrefHelper.getToken();
+    print("fastApIToke: $fastAPIToken");
+    final response = await http.delete(
+        Uri.parse('$baseUrl/notifications/user/me'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $fastAPIToken',
+        },
+        body: jsonEncode({
+          "race_id": raceId,
+          "notification_hour": hour
+        }),
+    );
+    print("notification delete response ${response.statusCode}");
+    print("notification delete response ${response.body}");
+    if (response.statusCode == 204) {
+      Get.snackbar("Alart", "Notification Stop successfully");
+    } else {
+      print("notification response ${response.statusCode}");
+      print("notification response ${response.body}");
+      throw Exception('Failed to load notifications');
     }
   }
 
-
-
-  @override
-  void onInit() {
-    // TODO: implement onInit
-    getEventsByRaceId(raceId);
-    super.onInit();
-  }
-
-
-
-
 }
-
-
-
 
 
